@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+  margin: 0;
+  font-family: "arial", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+.scroll {
+  overflow-y: hidden;
+}
+.scroll:hover {
+  overflow-y: scroll;
+}
+.scroll::-webkit-scrollbar {
+  width: 4px;
+  height: 4px !important;
+}
+/* Track */
+.scroll::-webkit-scrollbar-track {
+  border-radius: 2px;
+}
+/* Handle */
+.scroll::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.scroll::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+  display: block;
+}
+
+/* slick slide */
+.slick-next {
+  background-color: #a4a4a4 !important;
+  border-radius: 50%;
+  margin-top: -4px;
+}
+.slick-prev {
+  background-color: #b4b4b4 !important;
+  border-radius: 50%;
+  margin-top: -4px;
+}
+.slick-list {
+  margin: 0 -7px !important;
+}
+@media only screen and (max-width: 600px) {
+  .slick-slider {
+    max-width: 280px;
+  }
+  .slick-list {
+    margin: auto;
+    width: 100%;
+  }
+}
+.slick-slide > div {
+  padding: 0 7px !important;
+}
