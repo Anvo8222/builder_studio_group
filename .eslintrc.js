@@ -36,9 +36,9 @@ module.exports = {
     "no-const-assign": 0,
     "react/no-array-index-key": 0,
     "comma-dangle": 0,
-    // "jsx-a11y/no-noninteractive-element-interactions": 0,
     "import/prefer-default-export": 0,
-    // "arrow-body-style": 0,
+    "jsx-a11y/no-redundant-roles": 0,
+    "jsx-a11y/anchor-is-valid": 0,
     "prefer-template": 0,
   },
 };

@@ -1,38 +1,30 @@
 /* eslint-disable prefer-arrow-callback */
 import axios from "axios";
+import { baseUrl } from "../config/index";
 
 const api = process.env.baseUrl;
 
 const axiosClient = axios.create({
-  baseURL: api,
+  baseURL: baseUrl,
   headers: {
     "Content-Type": "application/json",
   },
 });
+// eslint-disable-next-line arrow-body-style
+axiosClient.interceptors.request.use(async (config) => {
+  return config;
+});
 
-// Add a request interceptor
-axios.interceptors.request.use(
-  function (config) {
-    // Do something before request is sent
-    return config;
-  },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error);
-  }
-);
-
-// Add a response interceptor
-axios.interceptors.response.use(
-  function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
+axiosClient.interceptors.response.use(
+  (response) => {
+    if (response && response.data) {
+      return response.data;
+    }
     return response;
   },
-  function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    return Promise.reject(error);
+  (error) => {
+    // Handle errors
+    throw error;
   }
 );
 
