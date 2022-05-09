@@ -9,10 +9,11 @@ import {
 } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import { useForm } from "react-hook-form";
-import { categorySelector, fetchItems } from "../../api/category";
+import { fetchItems } from "../../api/category";
 
 function Content(props) {
   const [isShowFormAddCategory, setIsShowFormAddCategory] = useState(false);
+  const [categorys, setCategorys] = useState([]);
   const {
     register,
     formState: { errors },
@@ -20,15 +21,17 @@ function Content(props) {
   } = useForm({
     criteriaMode: "all",
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => data;
 
   const dispatch = useDispatch();
   // hook to fetch items
   useEffect(() => {
     dispatch(fetchItems());
   }, [dispatch]);
-  const category = useSelector(categorySelector);
-  console.log("items", category);
+  const category = useSelector((state) => state.category);
+  useEffect(() => {
+    setCategorys(category.items);
+  }, []);
   return (
     <>
       <div className="flex items-center mb-4">
@@ -104,19 +107,25 @@ function Content(props) {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-300">
-          <tr className="whitespace-nowrap">
-            <td className="px-6 py-4 text-sm text-gray-500">1</td>
-            <td className="px-6 py-4">
-              <div className="text-sm text-gray-900">Jon doe</div>
-            </td>
-            <td className="px-6 py-4 text-sm text-gray-500">2021-1-12</td>
-            <td className="px-6 py-4">
-              <BiEdit className="w-6 h-6 text-green-400" />
-            </td>
-            <td className="px-6 py-4">
-              <AiFillDelete className="w-6 h-6 text-red-400" />
-            </td>
-          </tr>
+          {categorys?.map((item, index) => (
+            <tr key={item.id} className="whitespace-nowrap">
+              <td className="px-6 py-4 text-sm text-gray-500">{index}</td>
+              <td className="px-6 py-4">
+                <div className="text-sm text-gray-900">{item.name}</div>
+              </td>
+              <td className="px-6 py-4 text-sm text-gray-500">
+                {item.createdAt}
+              </td>
+              <td className="px-6 py-4">
+                <BiEdit className="w-6 h-6 text-green-400" />
+              </td>
+              <td className="px-6 py-4">
+                <AiFillDelete className="w-6 h-6 text-red-400" />
+              </td>
+            </tr>
+          ))}
+          {/* {categorys?.map((item, index) => (
+          ))} */}
         </tbody>
       </table>
     </>

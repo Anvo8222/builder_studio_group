@@ -3,7 +3,7 @@ import logger from "redux-logger";
 import isShowMenuFilterSlice from "./Slice/toggleMenuFilter";
 import currencyValues from "./Slice/changeCurrency";
 import cartSlice from "./Slice/cart";
-import itemSlice from "./api/category";
+import itemSlice from "./Slice/category";
 
 const store = configureStore({
   reducer: {
