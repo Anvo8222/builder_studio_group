@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import login from "../../api/LoginAuth";
+import { HOME_PAGE_ADMIN } from "../../config";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("Please enter your email !"),
@@ -28,12 +29,19 @@ function LoginPage() {
     resolver: yupResolver(schema),
   });
   const navigate = useNavigate();
+  const token = localStorage.getItem("TOKEN") ?? null;
+
+  useEffect(() => {
+    if (token !== null) {
+      navigate(HOME_PAGE_ADMIN);
+    }
+  }, [token]);
 
   const handleLogin = (admin) => {
     const loginAdmin = async () => {
       try {
         await login.loginAdmin(admin);
-        navigate('/admin');
+        navigate("/admin");
       } catch (error) {
         console.log("Login failed, please check your email and passwords");
       }

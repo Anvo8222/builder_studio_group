@@ -29,7 +29,7 @@ function Header({ onClickOutside }) {
     const logoutAdmin = async () => {
       try {
         await login.logoutAdmin(refreshToken);
-        navigate("/admin/login");
+        navigate("/admin/login/6278b6050dc55b3d10ccddc5");
       } catch (error) {
         console.log("logout fails");
       }
