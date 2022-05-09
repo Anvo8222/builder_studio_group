@@ -7,6 +7,7 @@ import PageNotFound from "./components/PageNotFound";
 import SubHeader from "./components/SubHeader";
 import AdminPage from "./containers/AdminPage";
 import HomePage from "./containers/HomePage";
+import LoginPage from "./containers/LoginPage";
 import "./index.css";
 
 function App() {
@@ -25,10 +26,9 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={home} />
-
-      <Route path="/admin" element={<AdminPage />}>
-        <Route path="/admin/category" element={<Category />} />
-      </Route>
+      <Route path="/admin" element={<AdminPage />} />
+      <Route path="/admin/category" element={<Category />} />
+      <Route path="/admin/login" element={<LoginPage />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

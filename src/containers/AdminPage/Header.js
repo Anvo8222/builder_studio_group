@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { BsChevronDown } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import login from "../../api/LoginAuth";
 
 function Header({ onClickOutside }) {
   const [isShowOptionUser, setIsShowOptionUser] = useState(false);
+  const refreshToken = localStorage.getItem("REFRESHTOKEN");
+  const navigate = useNavigate();
   const onToggleOptionUser = () => {
     setIsShowOptionUser(!isShowOptionUser);
   };
@@ -21,6 +24,18 @@ function Header({ onClickOutside }) {
       document.removeEventListener("click", handleClickOutside, true);
     };
   }, [onClickOutside]);
+
+  const handleLogout = () => {
+    const logoutAdmin = async () => {
+      try {
+        await login.logoutAdmin(refreshToken);
+        navigate("/admin/login");
+      } catch (error) {
+        console.log("logout fails");
+      }
+    };
+    logoutAdmin();
+  };
   return (
     <div
       id="header"
@@ -59,12 +74,14 @@ function Header({ onClickOutside }) {
               {isShowOptionUser ? (
                 <ul className="bg-gray-900 rounded shadow-md mt-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30">
                   <li>
-                    <Link
-                      to="!#"
+                    <div
+                      onClick={() => handleLogout()}
+                      role="button"
+                      tabIndex="0"
                       className="px-4 py-2 block text-gray-100 hover:bg-gray-800 no-underline hover:no-underline"
                     >
                       Logout
-                    </Link>
+                    </div>
                   </li>
                 </ul>
               ) : (
