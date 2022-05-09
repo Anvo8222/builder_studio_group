@@ -1,31 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axiosClients from "./axiosClient";
-import { categoryApi } from "../config";
-
-const itemSlice = createSlice({
-  name: "category",
-  initialState: [],
-  reducers: {
-    getItem: (state, { payload }) => {
-      state = payload;
-    },
-  },
-});
-const { actions, reducer } = itemSlice;
-export const { getItem } = actions;
-export default reducer;
-
-// export the selector (".items" being same as in slices/index.js's "items: something")
-export const categorySelector = (state) => state.category;
+import { getItem } from "../Slice/category";
+import { baseUrl } from "../config/index";
 // set up axios - simple json-server prototype config here
 // fetch all items
 export function fetchItems() {
-  const catelogy = "http://localhost:5000/v1/studio-categories";
+  const catelogy = `${baseUrl}/studio-categories`;
   return async (dispatch) => {
     axiosClients
       .get(catelogy)
       .then((response) => {
-        console.log("response", response.data);
         dispatch(getItem(response.data));
       })
       .catch((er) => {});
