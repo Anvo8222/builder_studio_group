@@ -9,8 +9,11 @@ const itemSlice = createSlice({
     getItem(state, action) {
       state.items = action.payload;
     },
+    addItem(state, action) {
+      state.items.push(action.payload);
+    },
   },
 });
 const { actions, reducer } = itemSlice;
-export const { getItem } = actions;
+export const { getItem, addItem } = actions;
 export default reducer;
