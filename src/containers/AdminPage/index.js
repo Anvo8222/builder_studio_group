@@ -7,11 +7,6 @@ import Content from "./Content";
 import category, { fetchItems } from "../../api/category";
 
 function AdminPage(props) {
-  // const [categorys, setCategorys] = useState([]);
-  // useEffect(() => {
-  //   setCategorys(fetchItems().get());
-  // });
-  // console.log("categorys", categorys);
   return (
     <>
       <Header />

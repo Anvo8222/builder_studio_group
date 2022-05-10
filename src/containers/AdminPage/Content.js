@@ -9,11 +9,15 @@ import {
 } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import { useForm } from "react-hook-form";
-import { fetchItems } from "../../api/category";
+import { fetchItems, postItem } from "../../api/category";
 
 function Content(props) {
   const [isShowFormAddCategory, setIsShowFormAddCategory] = useState(false);
   const [categorys, setCategorys] = useState([]);
+  const [dataCategory, setDataCategory] = useState({
+    name: "",
+  });
+  const category = useSelector((state) => state.category);
   const {
     register,
     formState: { errors },
@@ -21,17 +25,19 @@ function Content(props) {
   } = useForm({
     criteriaMode: "all",
   });
-  const onSubmit = (data) => data;
-
   const dispatch = useDispatch();
+  const onSubmit = (data) => {
+    // setDataCategory({ name: data.name });
+    dispatch(postItem(data));
+  };
   // hook to fetch items
   useEffect(() => {
     dispatch(fetchItems());
   }, [dispatch]);
-  const category = useSelector((state) => state.category);
+
   useEffect(() => {
     setCategorys(category.items);
-  }, []);
+  }, [category]);
   return (
     <>
       <div className="flex items-center mb-4">
@@ -62,29 +68,10 @@ function Content(props) {
                   invalid:border-pink-500 invalid:text-pink-600
                   focus:invalid:border-pink-500 focus:invalid:ring-pink-500 "
               placeholder="enter name category"
-              {...register("multipleErrorInput", {
+              name="name"
+              {...register("name", {
                 required: "This input is required.",
-                pattern: {
-                  value: /\d+/,
-                  message: "This input is number only.",
-                },
               })}
-            />
-            <ErrorMessage
-              errors={errors}
-              name="multipleErrorInput"
-              // eslint-disable-next-line arrow-body-style
-              render={({ messages }) => {
-                return messages
-                  ? Object.entries(messages).map(([type, message]) => (
-                      // eslint-disable-next-line react/jsx-indent
-                      <p className="text-center text-red-600" key={type}>
-                        {message}
-                      </p>
-                      // eslint-disable-next-line indent
-                    ))
-                  : null;
-              }}
             />
             <input
               className="bg-[#6c00ea] m-auto block w-[100px] rounded text-white "
@@ -108,7 +95,8 @@ function Content(props) {
         </thead>
         <tbody className="bg-white divide-y divide-gray-300">
           {categorys?.map((item, index) => (
-            <tr key={item.id} className="whitespace-nowrap">
+            // eslint-disable-next-line no-underscore-dangle
+            <tr key={item._id} className="whitespace-nowrap">
               <td className="px-6 py-4 text-sm text-gray-500">{index}</td>
               <td className="px-6 py-4">
                 <div className="text-sm text-gray-900">{item.name}</div>
