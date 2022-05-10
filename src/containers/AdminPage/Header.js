@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { BsChevronDown } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import login from "../../api/LoginAuth";
+import { LOGIN_PAGE_ADMIN } from "../../config";
 
 function Header({ onClickOutside }) {
   const [isShowOptionUser, setIsShowOptionUser] = useState(false);
@@ -29,7 +30,7 @@ function Header({ onClickOutside }) {
     const logoutAdmin = async () => {
       try {
         await login.logoutAdmin(refreshToken);
-        navigate("/admin/login/6278b6050dc55b3d10ccddc5");
+        navigate(LOGIN_PAGE_ADMIN);
       } catch (error) {
         console.log("logout fails");
       }

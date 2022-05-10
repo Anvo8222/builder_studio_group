@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import login from "../../api/LoginAuth";
-import { HOME_PAGE_ADMIN } from "../../config";
+import { HOME_PAGE_ADMIN, LOGIN_PAGE_ADMIN } from "../../config";
 
 const schema = yup.object().shape({
   email: yup.string().email().required("Please enter your email !"),
@@ -41,7 +41,7 @@ function LoginPage() {
     const loginAdmin = async () => {
       try {
         await login.loginAdmin(admin);
-        navigate("/admin");
+        navigate(LOGIN_PAGE_ADMIN);
       } catch (error) {
         console.log("Login failed, please check your email and passwords");
       }
