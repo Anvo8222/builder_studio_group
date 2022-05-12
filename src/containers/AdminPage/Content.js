@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import { ErrorMessage } from "@hookform/error-message";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,15 +10,13 @@ import {
 } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import { useForm } from "react-hook-form";
-import { fetchItems, postItem } from "../../api/category";
+import { deleteItem, fetchItems, postItem } from "../../api/category";
 
 function Content(props) {
   const [isShowFormAddCategory, setIsShowFormAddCategory] = useState(false);
   const [categorys, setCategorys] = useState([]);
-  const [dataCategory, setDataCategory] = useState({
-    name: "",
-  });
   const category = useSelector((state) => state.category);
+  console.log(category);
   const {
     register,
     formState: { errors },
@@ -27,10 +26,8 @@ function Content(props) {
   });
   const dispatch = useDispatch();
   const onSubmit = (data) => {
-    // setDataCategory({ name: data.name });
     dispatch(postItem(data));
   };
-  // hook to fetch items
   useEffect(() => {
     dispatch(fetchItems());
   }, [dispatch]);
@@ -38,6 +35,15 @@ function Content(props) {
   useEffect(() => {
     setCategorys(category.items);
   }, [category]);
+
+  const handleEditCategory = (item) => {
+    console.log(item._id);
+  };
+
+  const handleDeleteCategory = (item) => {
+    dispatch(deleteItem(item._id));
+  };
+
   return (
     <>
       <div className="flex items-center mb-4">
@@ -104,10 +110,20 @@ function Content(props) {
               <td className="px-6 py-4 text-sm text-gray-500">
                 {item.createdAt}
               </td>
-              <td className="px-6 py-4">
+              <td
+                onClick={() => handleEditCategory(item)}
+                role="button"
+                tabIndex="0"
+                className="px-6 py-4"
+              >
                 <BiEdit className="w-6 h-6 text-green-400" />
               </td>
-              <td className="px-6 py-4">
+              <td
+                className="px-6 py-4"
+                onClick={() => handleDeleteCategory(item)}
+                role="button"
+                tabIndex="0"
+              >
                 <AiFillDelete className="w-6 h-6 text-red-400" />
               </td>
             </tr>

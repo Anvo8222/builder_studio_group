@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -30,6 +31,7 @@ function LoginPage() {
   });
   const navigate = useNavigate();
   const token = localStorage.getItem("TOKEN") ?? null;
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
 
   useEffect(() => {
     if (token !== null) {
@@ -47,6 +49,14 @@ function LoginPage() {
       }
     };
     loginAdmin();
+  };
+
+  const handleShowPass = () => {
+    if (isPasswordShown) {
+      setIsPasswordShown(false);
+    } else {
+      setIsPasswordShown(true);
+    }
   };
 
   return (
@@ -84,10 +94,23 @@ function LoginPage() {
             <input
               className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
               name="password"
+              type={isPasswordShown ? "hide" : "password"}
               placeholder="Enter your password..."
               {...register("password")}
             />
-            <p classNameName="my-4 text-red-500">
+            <div
+              className="relative"
+              onClick={handleShowPass}
+              role="button"
+              tabIndex="0"
+            >
+              {isPasswordShown ? (
+                <FaEye className="absolute bottom-6 right-5" />
+              ) : (
+                <FaEyeSlash className="absolute bottom-6 right-5" />
+              )}
+            </div>
+            <p className="my-4 text-red-500">
               {errors.password && errors.password.message}
             </p>
           </div>

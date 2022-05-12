@@ -11,7 +11,6 @@ import LoginPage from "./containers/LoginPage";
 import "./index.css";
 import { HOME_PAGE_ADMIN, LOGIN_PAGE_ADMIN } from "./config";
 import ProtectedRoute from "./config/ProtectedRouter";
-import CategoryAdmin from "./containers/AdminPage/CategoryAdmin";
 
 function App() {
   const r = [
