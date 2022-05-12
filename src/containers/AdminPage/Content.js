@@ -10,11 +10,22 @@ import {
 } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import { useForm } from "react-hook-form";
-import { deleteItem, fetchItems, postItem } from "../../api/category";
+import {
+  fetchItems,
+  postItem,
+  patchItem,
+  deleteItem,
+} from "../../api/category";
+import { boderInput } from "../../styles/border";
 
 function Content(props) {
   const [isShowFormAddCategory, setIsShowFormAddCategory] = useState(false);
   const [categorys, setCategorys] = useState([]);
+  const [dataCategory, setDataCategory] = useState({
+    name: "",
+  });
+
+  const [handleInputName, setHandleInputName] = useState("");
   const category = useSelector((state) => state.category);
   console.log(category);
   const {
@@ -36,14 +47,23 @@ function Content(props) {
     setCategorys(category.items);
   }, [category]);
 
-  const handleEditCategory = (item) => {
-    console.log(item._id);
+  const onChangeNameCategory = (e) => {
+    setHandleInputName(e);
   };
-
-  const handleDeleteCategory = (item) => {
-    dispatch(deleteItem(item._id));
+  const onUpdateCategory = (item) => {
+    dispatch(
+      patchItem({
+        // eslint-disable-next-line no-underscore-dangle
+        _id: item._id,
+        name: handleInputName,
+      })
+    );
   };
-
+  const onDeleteCategory = (item) => {
+    // eslint-disable-next-line no-underscore-dangle
+    dispatch(deleteItem(item));
+    console.log("category", category);
+  };
   return (
     <>
       <div className="flex items-center mb-4">
@@ -69,18 +89,14 @@ function Content(props) {
               className="absolute right-[10px] text-xl top-[10px] text-red-700 cursor-pointer hover:text-red-300 "
             />
             <input
-              className="m-auto block rounded mb-2 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
-                  disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
-                  invalid:border-pink-500 invalid:text-pink-600
-                  focus:invalid:border-pink-500 focus:invalid:ring-pink-500 "
-              placeholder="enter name category"
+              className={`m-auto block rounded mb-2 ${boderInput}`}
               name="name"
               {...register("name", {
                 required: "This input is required.",
               })}
             />
             <input
-              className="bg-[#6c00ea] m-auto block w-[100px] rounded text-white "
+              className="bg-[#6c00ea] m-auto block w-[100px] rounded text-white"
               type="submit"
               value="Create"
             />
@@ -102,29 +118,30 @@ function Content(props) {
         <tbody className="bg-white divide-y divide-gray-300">
           {categorys?.map((item, index) => (
             // eslint-disable-next-line no-underscore-dangle
-            <tr key={item._id} className="whitespace-nowrap">
+            <tr key={item.id} className="whitespace-nowrap">
               <td className="px-6 py-4 text-sm text-gray-500">{index}</td>
               <td className="px-6 py-4">
-                <div className="text-sm text-gray-900">{item.name}</div>
+                <input
+                  className={`text-sm text-gray-900 border border-solid border-slate-300 rounded p-[2px] ${boderInput}`}
+                  defaultValue={item.name}
+                  onChange={(e) => onChangeNameCategory(e.target.value)}
+                  type="text"
+                />
               </td>
               <td className="px-6 py-4 text-sm text-gray-500">
                 {item.createdAt}
               </td>
-              <td
-                onClick={() => handleEditCategory(item)}
-                role="button"
-                tabIndex="0"
-                className="px-6 py-4"
-              >
-                <BiEdit className="w-6 h-6 text-green-400" />
+              <td className="px-6 py-4 cursor-pointer">
+                <BiEdit
+                  onClick={() => onUpdateCategory(item)}
+                  className="w-6 h-6 text-green-400"
+                />
               </td>
-              <td
-                className="px-6 py-4"
-                onClick={() => handleDeleteCategory(item)}
-                role="button"
-                tabIndex="0"
-              >
-                <AiFillDelete className="w-6 h-6 text-red-400" />
+              <td className="px-6 py-4">
+                <AiFillDelete
+                  onClick={() => onDeleteCategory(item)}
+                  className="w-6 h-6 text-red-400"
+                />
               </td>
             </tr>
           ))}

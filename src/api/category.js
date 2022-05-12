@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axiosClients from "./axiosClient";
-import { addItem, getItem } from "../Slice/category";
+import { addItem, getItem, updateItem, deleItem } from "../Slice/category";
 import { baseUrl } from "../config/index";
 // set up axios - simple json-server prototype config here
 // fetch all items
@@ -26,25 +26,25 @@ export function postItem(data) {
       .catch((er) => {});
   };
 }
-
-export function editITem(item) {
+export function patchItem(data) {
   return async (dispatch) => {
     axiosClients
-      .patch(catelogy, item)
+      // eslint-disable-next-line no-underscore-dangle
+      .patch(`${catelogy}/${data._id}`, data)
       .then((response) => {
-        dispatch(addItem(response));
+        console.log("respone Update", response);
+        dispatch(updateItem(response));
       })
       .catch((er) => {});
   };
 }
-
-export function deleteItem(item) {
-  console.log(item);
-
+export function deleteItem(data) {
   return async (dispatch) => {
     axiosClients
-      .delete(`/studio-categories/${item}`)
-      .then((response) => {
+      // eslint-disable-next-line no-underscore-dangle
+      .delete(`${catelogy}/${data._id}`)
+      .then(() => {
+        dispatch(deleItem(data));
       })
       .catch((er) => {});
   };
