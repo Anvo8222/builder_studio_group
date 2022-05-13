@@ -11,6 +11,7 @@ import LoginPage from "./containers/LoginPage";
 import "./index.css";
 import { HOME_PAGE_ADMIN, LOGIN_PAGE_ADMIN } from "./config";
 import ProtectedRoute from "./config/ProtectedRouter";
+import ProductsPage from "./containers/AdminPage/productsPage";
 
 function App() {
   const r = [
@@ -31,6 +32,14 @@ function App() {
     {
       path: "*",
       element: <PageNotFound />,
+    },
+    {
+      path: "/admin/product",
+      element: (
+        <ProtectedRoute pathRedirect={LOGIN_PAGE_ADMIN}>
+          <AdminPage />
+        </ProtectedRoute>
+      ),
     },
   ];
   const home = (

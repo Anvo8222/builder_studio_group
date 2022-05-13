@@ -7,29 +7,31 @@ import { Link } from "react-router-dom";
 
 function SideBar(props) {
   return (
-    <div className="space-y-2 basis-2/12 w-64 rounded py-4 px-3 dark:bg-gray-800 bg-[#9adad8]">
-      <Link
-        to="/admin/category"
-        className="flex cursor-pointer items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-      >
-        <BiCategory />
-        <span className="flex-1 ml-3 whitespace-nowrap">Category</span>
-      </Link>
-      <Link
-        to="/admin/type"
-        className="flex cursor-pointer items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-      >
-        <VscTypeHierarchy />
-        <span className="flex-1 ml-3 whitespace-nowrap">Type</span>
-      </Link>
-      <Link
-        to="/admin/product"
-        className="flex cursor-pointer items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-      >
-        <MdOutlineProductionQuantityLimits />
-        <span className="flex-1 ml-3 whitespace-nowrap">Product</span>
-      </Link>
-    </div>
+    <nav>
+      <div className="space-y-2 basis-2/12 w-64 rounded py-4 px-3 dark:bg-gray-800 bg-[#9adad8]">
+        <Link
+          to="/admin/category"
+          className="flex cursor-pointer items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <BiCategory />
+          <span className="flex-1 ml-3 whitespace-nowrap">Category</span>
+        </Link>
+        <Link
+          to="/admin/type"
+          className="flex cursor-pointer items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <VscTypeHierarchy />
+          <span className="flex-1 ml-3 whitespace-nowrap">Type</span>
+        </Link>
+        <Link
+          to="/admin/product"
+          className="flex cursor-pointer items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+        >
+          <MdOutlineProductionQuantityLimits />
+          <span className="flex-1 ml-3 whitespace-nowrap">Product</span>
+        </Link>
+      </div>
+    </nav>
   );
 }
 SideBar.propTypes = {};

@@ -5,6 +5,7 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import Content from "./Content";
 import category, { fetchItems } from "../../api/category";
+import RouterPage from "./RouterPage";
 
 function AdminPage(props) {
   return (
@@ -14,7 +15,8 @@ function AdminPage(props) {
         <SideBar />
         <div className="basis-10/12 flex justify-center container border-b border-gray-200 shadow">
           <div>
-            <Content />
+            {/* <Content /> */}
+            <RouterPage />
           </div>
         </div>
       </div>
