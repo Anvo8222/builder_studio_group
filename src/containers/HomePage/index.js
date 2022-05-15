@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import TypeProductOptions from "./TypeProductOptions";
 import Products from "./Products";
 import productList from "../../data/products";
+import { fetchItems } from "../../api/category";
 
 function HomePage(props) {
+  const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -16,6 +19,10 @@ function HomePage(props) {
         alert.error(error);
       }
     })();
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchItems());
   }, []);
 
   return (

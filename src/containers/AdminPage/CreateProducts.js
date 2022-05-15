@@ -10,10 +10,9 @@ function CreateProducts({ oncloseProducts }) {
   };
 
   return (
-    <div>
-      <div className="bg-slate-900 h-full w-full "></div>
+    <div className="absolute top-[10%] left-[30%] w-[50%]">
       <form
-        className="text-center w-8/12 relative m-auto rounded py-4 block bg-[#ace7e9e6] items-center justify-center"
+        className="text-center w-full relative m-auto rounded py-4 block bg-[#ace7e9e6] items-center justify-center"
         // onSubmit={handleSubmit(onSubmit)}
       >
         <AiOutlineCloseCircle
@@ -22,7 +21,7 @@ function CreateProducts({ oncloseProducts }) {
           role="button"
           className="absolute right-[10px] text-xl top-[10px] text-red-700 cursor-pointer hover:text-red-300 "
         />
-        <div className="mb-4">
+        <div className="mb-4 flex space-between">
           <label
             className="block text-grey-darker text-sm font-bold mb-2"
             name="username"
@@ -40,58 +39,66 @@ function CreateProducts({ oncloseProducts }) {
             {/* {errors.email && errors.email.message} */}
           </p>
         </div>
-        <label
-          className="block text-grey-darker text-sm font-bold mb-2"
-          name="username"
-        >
-          Name!
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-6/12 py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
-          type="Name"
-          name="Name"
-          placeholder="Enter your name..."
-          // {...register("email")}
-        />
-        <label
-          className="block text-grey-darker text-sm font-bold mb-2"
-          name="username"
-        >
-          Name!
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-6/12 py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
-          type="Name"
-          name="Name"
-          placeholder="Enter your name..."
-          // {...register("email")}
-        />
-        <label
-          className="block text-grey-darker text-sm font-bold mb-2"
-          name="username"
-        >
-          Name!
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-6/12 py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
-          type="Name"
-          name="Name"
-          placeholder="Enter your name..."
-          // {...register("email")}
-        />
-        <label
-          className="block text-grey-darker text-sm font-bold mb-2"
-          name="username"
-        >
-          image!
-        </label>
-        <input
-          className="shadow appearance-none border rounded w-6/12 py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
-          type="file"
-          name="picture"
-          placeholder="Enter your name..."
-          // {...register("email")}
-        />
+        <div className="mb-4 flex space-between">
+          <label
+            className="block text-grey-darker text-sm font-bold mb-2"
+            name="username"
+          >
+            Price!
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-6/12 py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+            type="price"
+            name="price"
+            placeholder="Enter your price..."
+            // {...register("price")}
+          />
+        </div>
+        <div className="mb-4 flex space-between">
+          <label
+            className="block text-grey-darker text-sm font-bold mb-2"
+            name="username"
+          >
+            Name!
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-6/12 py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+            type="Name"
+            name="Name"
+            placeholder="Enter your name..."
+            // {...register("email")}
+          />
+        </div>
+        <div className="mb-4 flex space-between">
+          <label
+            className="block text-grey-darker text-sm font-bold mb-2"
+            name="username"
+          >
+            Name!
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-6/12 py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+            type="Name"
+            name="Name"
+            placeholder="Enter your name..."
+            // {...register("email")}
+          />
+        </div>
+        <div className="mb-4 flex space-between">
+          <label
+            className="block text-grey-darker text-sm font-bold mb-2"
+            name="username"
+          >
+            image!
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-6/12 py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
+            type="file"
+            name="picture"
+            placeholder="Enter your name..."
+            // {...register("email")}
+          />
+        </div>
 
         <select className="m-auto block rounded mb-2">
           <option>Select dropdown</option>

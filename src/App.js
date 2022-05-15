@@ -11,7 +11,8 @@ import LoginPage from "./containers/LoginPage";
 import "./index.css";
 import { HOME_PAGE_ADMIN, LOGIN_PAGE_ADMIN } from "./config";
 import ProtectedRoute from "./config/ProtectedRouter";
-import ProductsPage from "./containers/AdminPage/productsPage";
+import ProductsPage from "./containers/AdminPage/ProductsPage";
+import Content from "./containers/AdminPage/CategoryPage";
 
 function App() {
   const r = [
@@ -37,7 +38,15 @@ function App() {
       path: "/admin/product",
       element: (
         <ProtectedRoute pathRedirect={LOGIN_PAGE_ADMIN}>
-          <AdminPage />
+          <ProductsPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/admin/category",
+      element: (
+        <ProtectedRoute pathRedirect={LOGIN_PAGE_ADMIN}>
+          <Content />
         </ProtectedRoute>
       ),
     },

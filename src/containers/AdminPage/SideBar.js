@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function SideBar(props) {
   return (
-    <nav>
+    <nav className="w-1/4 float-left">
       <div className="space-y-2 basis-2/12 w-64 rounded py-4 px-3 dark:bg-gray-800 bg-[#9adad8]">
         <Link
           to="/admin/category"

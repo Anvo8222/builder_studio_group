@@ -17,6 +17,8 @@ import {
   deleteItem,
 } from "../../api/category";
 import { boderInput } from "../../styles/border";
+import Header from "./Header";
+import SideBar from "./SideBar";
 
 function Content(props) {
   const [isShowFormAddCategory, setIsShowFormAddCategory] = useState(false);
@@ -27,7 +29,6 @@ function Content(props) {
 
   const [handleInputName, setHandleInputName] = useState("");
   const category = useSelector((state) => state.category);
-  console.log(category);
   const {
     register,
     formState: { errors },
@@ -41,7 +42,7 @@ function Content(props) {
   };
   useEffect(() => {
     dispatch(fetchItems());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     setCategorys(category.items);
@@ -66,6 +67,8 @@ function Content(props) {
   };
   return (
     <>
+      <Header />
+      <SideBar />
       <div className="flex items-center mb-4">
         {!isShowFormAddCategory ? (
           <button
