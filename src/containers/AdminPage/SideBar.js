@@ -7,27 +7,33 @@ import { Link } from "react-router-dom";
 
 function SideBar(props) {
   return (
-    <div className="space-y-2 basis-2/12 w-64 rounded py-4 px-3 dark:bg-gray-800 bg-[#9adad8]">
+    <div className="space-y-2 basis-2/12 w-64 rounded-lg py-4 px-3 dark:bg-gray-800 bg-[#11111d] ml-2">
       <Link
         to="/admin/category"
-        className="flex cursor-pointer items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+        className="group flex cursor-pointer items-center p-2 text-base font-normal rounded-xl hover:bg-gray-100 "
       >
-        <BiCategory />
-        <span className="flex-1 ml-3 whitespace-nowrap">Category</span>
+        <BiCategory className="text-white group-hover:text-[#11111d]" />
+        <span className="flex-1 text-white ml-3 whitespace-nowrap group-hover:text-[#11111d]">
+          Category
+        </span>
       </Link>
       <Link
         to="/admin/type"
-        className="flex cursor-pointer items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+        className="flex group cursor-pointer items-center p-2 text-base font-normal text-white rounded-xl dark:text-white hover:bg-gray-100  dark:hover:bg-gray-700"
       >
-        <VscTypeHierarchy />
-        <span className="flex-1 ml-3 whitespace-nowrap">Type</span>
+        <VscTypeHierarchy className="text-white group-hover:text-[#11111d]" />
+        <span className="flex-1 ml-3 whitespace-nowrap group-hover:text-[#11111d]">
+          Type
+        </span>
       </Link>
       <Link
         to="/admin/product"
-        className="flex cursor-pointer items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+        className="flex group cursor-pointer items-center p-2 text-base font-normal text-white rounded-xl dark:text-white hover:bg-gray-100  dark:hover:bg-gray-700"
       >
-        <MdOutlineProductionQuantityLimits />
-        <span className="flex-1 ml-3 whitespace-nowrap">Product</span>
+        <MdOutlineProductionQuantityLimits className="text-white group-hover:text-[#11111d]" />
+        <span className="flex-1 ml-3 whitespace-nowrap group-hover:text-[#11111d]">
+          Product
+        </span>
       </Link>
     </div>
   );

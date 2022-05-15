@@ -1,31 +1,31 @@
-import { ErrorMessage } from "@hookform/error-message";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types";
-import {
-  AiFillDelete,
-  AiOutlineFolderAdd,
-  AiOutlineCloseCircle,
-} from "react-icons/ai";
-import { BiEdit } from "react-icons/bi";
 import { useForm } from "react-hook-form";
 import {
-  fetchItems,
-  postItem,
-  patchItem,
+  AiFillDelete,
+  AiOutlineCloseCircle,
+  AiOutlineFolderAdd,
+} from "react-icons/ai";
+import { BiEdit } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import {
   deleteItem,
+  fetchItems,
+  patchItem,
+  postItem,
 } from "../../api/category";
 import { boderInput } from "../../styles/border";
+import { formatDate } from "../../utils/formatDate";
+import FormUpdate from "./FormUpdate";
 
 function Content(props) {
   const [isShowFormAddCategory, setIsShowFormAddCategory] = useState(false);
   const [categorys, setCategorys] = useState([]);
-  const [dataCategory, setDataCategory] = useState({
-    name: "",
-  });
-
-  const [handleInputName, setHandleInputName] = useState("");
+  const [isShowEditCategory, setIsShowEditCategory] = useState(false);
+  const [idUpdateCategory, setIdUpdateCategory] = useState(null);
   const category = useSelector((state) => state.category);
+  useEffect(() => {
+    setCategorys(category.items);
+  }, [category]);
   const {
     register,
     formState: { errors },
@@ -41,27 +41,19 @@ function Content(props) {
   useEffect(() => {
     dispatch(fetchItems());
   }, [dispatch]);
-
-  useEffect(() => {
-    setCategorys(category.items);
-  }, [category]);
-
-  const onChangeNameCategory = (e) => {
-    setHandleInputName(e);
+  const onShowUpdateCategory = (item) => {
+    setIsShowEditCategory(true);
+    // eslint-disable-next-line no-underscore-dangle
+    setIdUpdateCategory(item._id);
   };
-  const onUpdateCategory = (item) => {
-    dispatch(
-      patchItem({
-        // eslint-disable-next-line no-underscore-dangle
-        _id: item._id,
-        name: handleInputName,
-      })
-    );
+  const onCloseUpdateCategory = () => {
+    setIsShowEditCategory(false);
   };
+  const onSubmitt = (data) => {};
+
   const onDeleteCategory = (item) => {
     // eslint-disable-next-line no-underscore-dangle
     dispatch(deleteItem(item));
-    console.log("category", category);
   };
   return (
     <>
@@ -120,26 +112,30 @@ function Content(props) {
             <tr key={item.id} className="whitespace-nowrap">
               <td className="px-6 py-4 text-sm text-gray-500">{index}</td>
               <td className="px-6 py-4">
-                <input
-                  className={`text-sm text-gray-900 border border-solid border-slate-300 rounded p-[2px] ${boderInput}`}
-                  defaultValue={item.name}
-                  onChange={(e) => onChangeNameCategory(e.target.value)}
-                  type="text"
-                />
+                {/* {isShowEditCategory ? (
+                  <input
+                    className={`text-sm text-gray-900 border border-solid border-slate-300 rounded p-[2px] ${boderInput}`}
+                    defaultValue={item.name}
+                    onChange={(e) => onChangeNameCategory(e.target.value)}
+                    type="text"
+                  />
+                ) : (
+                )} */}
+                <span>{item.name}</span>
               </td>
               <td className="px-6 py-4 text-sm text-gray-500">
-                {item.createdAt}
+                {formatDate(item.createdAt)}
               </td>
               <td className="px-6 py-4 cursor-pointer">
                 <BiEdit
-                  onClick={() => onUpdateCategory(item)}
-                  className="w-6 h-6 text-green-400"
+                  onClick={() => onShowUpdateCategory(item)}
+                  className="w-6 h-6 text-green-400 hover:text-green-600 cursor-pointer"
                 />
               </td>
               <td className="px-6 py-4">
                 <AiFillDelete
                   onClick={() => onDeleteCategory(item)}
-                  className="w-6 h-6 text-red-400"
+                  className="w-6 h-6 text-red-400 hover:text-red-600 cursor-pointer"
                 />
               </td>
             </tr>
@@ -148,6 +144,14 @@ function Content(props) {
           ))} */}
         </tbody>
       </table>
+      {isShowEditCategory ? (
+        <FormUpdate
+          onClose={onCloseUpdateCategory}
+          idUpdate={idUpdateCategory}
+        />
+      ) : (
+        false
+      )}
     </>
   );
 }

@@ -22,12 +22,13 @@ const itemSlice = createSlice({
     },
     deleItem(state, action) {
       // eslint-disable-next-line no-underscore-dangle
-      const itemNeedRemoveInCategory = action.payload._id;
-      const indexItemNeedRemoveInCategory = state.items.findIndex(
+      console.log("action.payload._id", action.payload._id);
+      // eslint-disable-next-line no-underscore-dangle
+      const idNeedRemoveInCategory = action.payload._id;
+      state.items = state.items.filter(
         // eslint-disable-next-line no-underscore-dangle
-        (x) => x._id === itemNeedRemoveInCategory
+        (item) => item._id !== idNeedRemoveInCategory
       );
-      state.items.splice(indexItemNeedRemoveInCategory, 1);
     },
   },
 });

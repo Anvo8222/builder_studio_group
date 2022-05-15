@@ -39,6 +39,8 @@ export function patchItem(data) {
 }
 export function deleteItem(data) {
   return async (dispatch) => {
+    // eslint-disable-next-line no-underscore-dangle
+    console.log("data._id", data._id);
     axiosClients
       // eslint-disable-next-line no-underscore-dangle
       .delete(`${catelogy}/${data._id}`)
