@@ -24,7 +24,6 @@ function CreateProducts({ oncloseProducts, categories }) {
   const dispatch = useDispatch();
   const [pictureLogo, setPictureLogo] = useState(null);
   const [pictureProducts, setPictureProducts] = useState([]);
-  console.log(pictureProducts);
   const { register, handleSubmit } = useForm();
 
   const handleCloseProducts = () => {
