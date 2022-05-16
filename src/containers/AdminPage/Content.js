@@ -10,9 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteItem,
   fetchItems,
+  // fetchItemUpdate,
   patchItem,
   postItem,
 } from "../../api/category";
+// import { getItemUpdate } from "../../Slice/category";
 import { boderInput } from "../../styles/border";
 import { formatDate } from "../../utils/formatDate";
 import FormUpdate from "./FormUpdate";
@@ -21,7 +23,7 @@ function Content(props) {
   const [isShowFormAddCategory, setIsShowFormAddCategory] = useState(false);
   const [categorys, setCategorys] = useState([]);
   const [isShowEditCategory, setIsShowEditCategory] = useState(false);
-  const [idUpdateCategory, setIdUpdateCategory] = useState(null);
+  const [itemUpdateCategory, setItemUpdateCategory] = useState(null);
   const category = useSelector((state) => state.category);
   useEffect(() => {
     setCategorys(category.items);
@@ -30,12 +32,14 @@ function Content(props) {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm({
     criteriaMode: "all",
   });
   const dispatch = useDispatch();
-  const onSubmit = (data) => {
+  const onSubmitAddNewCategory = (data) => {
     dispatch(postItem(data));
+    reset();
   };
   // hook to fetch items
   useEffect(() => {
@@ -43,18 +47,27 @@ function Content(props) {
   }, [dispatch]);
   const onShowUpdateCategory = (item) => {
     setIsShowEditCategory(true);
-    // eslint-disable-next-line no-underscore-dangle
-    setIdUpdateCategory(item._id);
+    setItemUpdateCategory(item);
   };
   const onCloseUpdateCategory = () => {
     setIsShowEditCategory(false);
   };
-  const onSubmitt = (data) => {};
 
   const onDeleteCategory = (item) => {
     // eslint-disable-next-line no-underscore-dangle
     dispatch(deleteItem(item));
   };
+
+  const onUpdateCategory = (data) => {
+    dispatch(
+      patchItem({
+        // eslint-disable-next-line no-underscore-dangle
+        _id: itemUpdateCategory._id,
+        name: data.name,
+      })
+    );
+  };
+
   return (
     <>
       <div className="flex items-center mb-4">
@@ -73,7 +86,7 @@ function Content(props) {
         {isShowFormAddCategory ? (
           <form
             className="w-full relative m-auto rounded py-4 block bg-[#ace7e9e6] items-center justify-center"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmitAddNewCategory)}
           >
             <AiOutlineCloseCircle
               onClick={() => setIsShowFormAddCategory(false)}
@@ -112,15 +125,6 @@ function Content(props) {
             <tr key={item.id} className="whitespace-nowrap">
               <td className="px-6 py-4 text-sm text-gray-500">{index}</td>
               <td className="px-6 py-4">
-                {/* {isShowEditCategory ? (
-                  <input
-                    className={`text-sm text-gray-900 border border-solid border-slate-300 rounded p-[2px] ${boderInput}`}
-                    defaultValue={item.name}
-                    onChange={(e) => onChangeNameCategory(e.target.value)}
-                    type="text"
-                  />
-                ) : (
-                )} */}
                 <span>{item.name}</span>
               </td>
               <td className="px-6 py-4 text-sm text-gray-500">
@@ -140,14 +144,13 @@ function Content(props) {
               </td>
             </tr>
           ))}
-          {/* {categorys?.map((item, index) => (
-          ))} */}
         </tbody>
       </table>
       {isShowEditCategory ? (
         <FormUpdate
           onClose={onCloseUpdateCategory}
-          idUpdate={idUpdateCategory}
+          itemUpdate={itemUpdateCategory}
+          onUpdateCategory={onUpdateCategory}
         />
       ) : (
         false
