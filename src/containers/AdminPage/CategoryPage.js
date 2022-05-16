@@ -1,8 +1,6 @@
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import { ErrorMessage } from "@hookform/error-message";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types";
 import {
   AiFillDelete,
   AiOutlineFolderAdd,
@@ -21,14 +19,6 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 
 function Content(props) {
-  const [isShowFormAddCategory, setIsShowFormAddCategory] = useState(false);
-  const [categorys, setCategorys] = useState([]);
-  const [dataCategory, setDataCategory] = useState({
-    name: "",
-  });
-
-  const [handleInputName, setHandleInputName] = useState("");
-  const category = useSelector((state) => state.category);
   const {
     register,
     formState: { errors },
@@ -36,10 +26,17 @@ function Content(props) {
   } = useForm({
     criteriaMode: "all",
   });
+
+  const [isShowFormAddCategory, setIsShowFormAddCategory] = useState(false);
+  const [categorys, setCategorys] = useState([]);
+  const [handleInputName, setHandleInputName] = useState("");
+  const category = useSelector((state) => state.category);
   const dispatch = useDispatch();
+
   const onSubmit = (data) => {
     dispatch(postItem(data));
   };
+
   useEffect(() => {
     dispatch(fetchItems());
   }, []);
@@ -51,20 +48,20 @@ function Content(props) {
   const onChangeNameCategory = (e) => {
     setHandleInputName(e);
   };
+
   const onUpdateCategory = (item) => {
     dispatch(
       patchItem({
-        // eslint-disable-next-line no-underscore-dangle
         _id: item._id,
         name: handleInputName,
       })
     );
   };
+
   const onDeleteCategory = (item) => {
-    // eslint-disable-next-line no-underscore-dangle
     dispatch(deleteItem(item));
-    console.log("category", category);
   };
+
   return (
     <>
       <Header />
