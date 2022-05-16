@@ -1,3 +1,5 @@
+/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const productReducer = createSlice({
@@ -7,14 +9,19 @@ const productReducer = createSlice({
   },
   reducers: {
     getProducts(state, action) {
-      console.log(action.payload);
       state.products = action.payload;
     },
     addProducts(state, action) {
       state.products.push(action.payload);
     },
+    removeProduct(state, action) {
+      const idProducts = action.payload._id;
+      state.products = state.products.filter(
+        (item) => item._id !== idProducts
+      );
+    },
   },
 });
 const { actions, reducer } = productReducer;
-export const { getProducts, addProducts } = actions;
+export const { getProducts, addProducts, removeProduct } = actions;
 export default reducer;

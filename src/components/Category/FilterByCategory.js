@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 function FilterByCategory() {
   const [categorys, setCategorys] = useState();
-  console.log(categorys);
   const cate = useSelector((state) => state.category);
 
   useEffect(() => {

@@ -3,16 +3,18 @@ import { AiOutlineFolderAdd, AiFillDelete } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchItems } from "../../api/category";
-import { fetchProducs } from "../../api/productsAuth";
+import { deleteProduct, fetchProducs } from "../../api/productsAuth";
 import { baseImg } from "../../config";
+import { removeProduct } from "../../Slice/products";
 import CreateProducts from "./CreateProducts";
 import Header from "./Header";
 import SideBar from "./SideBar";
 
 function ProductsPage(props) {
   const [isShowAddNewProducts, setsShowAddNewProducts] = useState(false);
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
-  console.log(products);
+  const category = useSelector((state) => state.category.items);
 
   const isModelAddProducts = () => {
     setsShowAddNewProducts(true);
@@ -21,20 +23,6 @@ function ProductsPage(props) {
     setsShowAddNewProducts(false);
   };
 
-  // useEffect(() => {
-  //   if (isShowAddNewProducts) {
-  //     document.body.style.overflow = "hidden";
-  //   } else {
-  //     document.body.style.overflow = "unset";
-  //   }
-  //   return () => {
-  //     document.body.style.overflow = "unset";
-  //   };
-  // }, [isShowAddNewProducts]);
-
-  const dispatch = useDispatch();
-  const category = useSelector((state) => state.category.items);
-
   useEffect(() => {
     dispatch(fetchItems());
   }, []);
@@ -42,6 +30,10 @@ function ProductsPage(props) {
   useEffect(() => {
     dispatch(fetchProducs());
   }, []);
+
+  const handleDeleteProduct = (item) => {
+    dispatch(deleteProduct(item));
+  };
 
   return (
     <div>
@@ -76,11 +68,7 @@ function ProductsPage(props) {
                 <td className="px-6 py-4 text-sm text-gray-500">{index}</td>
                 <td className="px-6 py-4 text-sm text-gray-500">{item.name}</td>
                 <td className="px-6 py-4">
-                  <img
-                    className="text-sm text-gray-900"
-                    alt=""
-                    src={`${baseImg}/${item.imgLogo}`}
-                  />
+                  <img alt="" src={`${baseImg}/${item.imgLogo}`} width="50px" />
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">
                   {item.createdAt}
@@ -95,7 +83,7 @@ function ProductsPage(props) {
                 </td>
                 <td
                   className="px-6 py-4"
-                  // onClick={() => handleDeleteCategory(item)}
+                  onClick={() => handleDeleteProduct(item)}
                   role="button"
                   tabIndex="0"
                 >

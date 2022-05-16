@@ -1,8 +1,9 @@
+/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
 import { createSlice } from "@reduxjs/toolkit";
 import axiosClients from "./axiosClient";
 import { addItem, getItem, updateItem, deleItem } from "../Slice/category";
 import { baseUrl } from "../config/index";
-import { addProducts, getProducts } from "../Slice/products";
+import { addProducts, getProducts, removeProduct } from "../Slice/products";
 // set up axios - simple json-server prototype config here
 // fetch all items
 const products = `${baseUrl}/studio-product`;
@@ -23,7 +24,6 @@ export function uploadImageProducts(image) {
     axiosClients
       .post(uploadProducrs, image)
       .then((response) => {
-        // console.log("response", response);
       })
       .catch((er) => {});
   };
@@ -46,6 +46,17 @@ export function fetchProducs() {
       .get(products)
       .then((response) => {
         dispatch(getProducts(response.data));
+      })
+      .catch((er) => {});
+  };
+}
+
+export function deleteProduct(data) {
+  return async (dispatch) => {
+    axiosClients
+      .delete(`${products}/${data._id}`)
+      .then(() => {
+        dispatch(removeProduct(data));
       })
       .catch((er) => {});
   };
