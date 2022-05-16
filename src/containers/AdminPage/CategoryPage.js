@@ -9,32 +9,41 @@ import {
 import { BiEdit } from "react-icons/bi";
 import { useForm } from "react-hook-form";
 import {
-  fetchItems,
-  postItem,
-  patchItem,
   deleteItem,
+  fetchItems,
+  patchItem,
+  postItem,
 } from "../../api/category";
 import { boderInput } from "../../styles/border";
 import Header from "./Header";
 import SideBar from "./SideBar";
+import { formatDate } from "../../utils/formatDate";
+import FormUpdate from "./FormUpdate";
 
 function Content(props) {
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm({
     criteriaMode: "all",
   });
 
   const [isShowFormAddCategory, setIsShowFormAddCategory] = useState(false);
   const [categorys, setCategorys] = useState([]);
-  const [handleInputName, setHandleInputName] = useState("");
-  const category = useSelector((state) => state.category);
+  const [isShowEditCategory, setIsShowEditCategory] = useState(false);
+  const [itemUpdateCategory, setItemUpdateCategory] = useState(null);
   const dispatch = useDispatch();
+  const category = useSelector((state) => state.category);
 
-  const onSubmit = (data) => {
+  useEffect(() => {
+    setCategorys(category.items);
+  }, [category]);
+
+  const onSubmitAddNewCategory = (data) => {
     dispatch(postItem(data));
+    reset();
   };
 
   useEffect(() => {
@@ -45,21 +54,26 @@ function Content(props) {
     setCategorys(category.items);
   }, [category]);
 
-  const onChangeNameCategory = (e) => {
-    setHandleInputName(e);
+  const onShowUpdateCategory = (item) => {
+    setIsShowEditCategory(true);
+    setItemUpdateCategory(item);
   };
-
-  const onUpdateCategory = (item) => {
-    dispatch(
-      patchItem({
-        _id: item._id,
-        name: handleInputName,
-      })
-    );
+  const onCloseUpdateCategory = () => {
+    setIsShowEditCategory(false);
   };
 
   const onDeleteCategory = (item) => {
     dispatch(deleteItem(item));
+  };
+
+  const onUpdateCategory = (data) => {
+    dispatch(
+      patchItem({
+        // eslint-disable-next-line no-underscore-dangle
+        _id: itemUpdateCategory._id,
+        name: data.name,
+      })
+    );
   };
 
   return (
@@ -82,7 +96,7 @@ function Content(props) {
         {isShowFormAddCategory ? (
           <form
             className="w-full relative m-auto rounded py-4 block bg-[#ace7e9e6] items-center justify-center"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmitAddNewCategory)}
           >
             <AiOutlineCloseCircle
               onClick={() => setIsShowFormAddCategory(false)}
@@ -121,34 +135,36 @@ function Content(props) {
             <tr key={item.id} className="whitespace-nowrap">
               <td className="px-6 py-4 text-sm text-gray-500">{index}</td>
               <td className="px-6 py-4">
-                <input
-                  className={`text-sm text-gray-900 border border-solid border-slate-300 rounded p-[2px] ${boderInput}`}
-                  defaultValue={item.name}
-                  onChange={(e) => onChangeNameCategory(e.target.value)}
-                  type="text"
-                />
+                <span>{item.name}</span>
               </td>
               <td className="px-6 py-4 text-sm text-gray-500">
-                {item.createdAt}
+                {formatDate(item.createdAt)}
               </td>
               <td className="px-6 py-4 cursor-pointer">
                 <BiEdit
-                  onClick={() => onUpdateCategory(item)}
-                  className="w-6 h-6 text-green-400"
+                  onClick={() => onShowUpdateCategory(item)}
+                  className="w-6 h-6 text-green-400 hover:text-green-600 cursor-pointer"
                 />
               </td>
               <td className="px-6 py-4">
                 <AiFillDelete
                   onClick={() => onDeleteCategory(item)}
-                  className="w-6 h-6 text-red-400"
+                  className="w-6 h-6 text-red-400 hover:text-red-600 cursor-pointer"
                 />
               </td>
             </tr>
           ))}
-          {/* {categorys?.map((item, index) => (
-          ))} */}
         </tbody>
       </table>
+      {isShowEditCategory ? (
+        <FormUpdate
+          onClose={onCloseUpdateCategory}
+          itemUpdate={itemUpdateCategory}
+          onUpdateCategory={onUpdateCategory}
+        />
+      ) : (
+        false
+      )}
     </>
   );
 }
