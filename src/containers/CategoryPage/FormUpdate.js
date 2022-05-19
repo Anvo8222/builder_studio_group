@@ -21,7 +21,7 @@ function FormUpdate({ onClose, itemUpdate, onUpdateCategory }) {
       <div className="fixed top-0 bottom-0 right-0 left-0 bg-black opacity-[0.5]"></div>
       <div className="fixed bg-[#11111d] w-[500px] h-[300px] top-[100px] rounded">
         <form
-          className="flex relative flex-col h-[100%] items-center justify-center rounded"
+          className="flex bg-[#11111d] relative flex-col h-[100%] items-center justify-center rounded"
           onSubmit={handleSubmit(onUpdateCategory)}
         >
           <AiOutlineCloseCircle

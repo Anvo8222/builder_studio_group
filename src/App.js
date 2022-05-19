@@ -7,7 +7,9 @@ import PageNotFound from "./components/PageNotFound";
 import SubHeader from "./components/SubHeader";
 import AdminPage from "./containers/AdminPage";
 import HomePage from "./containers/HomePage";
+import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
+import CategoryPage from "./containers/CategoryPage";
 
 function App() {
   const home = (
@@ -25,9 +27,8 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={home} />
-
       <Route path="/admin" element={<AdminPage />}>
-        <Route path="/admin/category" element={<Category />} />
+        <Route path="category" element={<CategoryPage />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>

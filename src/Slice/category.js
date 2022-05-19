@@ -4,9 +4,12 @@ const itemSlice = createSlice({
   name: "category",
   initialState: {
     items: [],
-    itemUpdate: {},
+    total: 0,
   },
   reducers: {
+    getTotal(state, action) {
+      state.total = action.payload;
+    },
     getItem(state, action) {
       state.items = action.payload;
     },
@@ -32,5 +35,5 @@ const itemSlice = createSlice({
   },
 });
 const { actions, reducer } = itemSlice;
-export const { getItem, addItem, updateItem, deleItem } = actions;
+export const { getItem, addItem, updateItem, deleItem, getTotal } = actions;
 export default reducer;

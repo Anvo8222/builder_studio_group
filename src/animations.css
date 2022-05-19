@@ -83,3 +83,38 @@
     transform: scale(1);
   }
 }
+
+/* dialog */
+.toast {
+  animation: coundown 3s ease-in;
+}
+.slideShow {
+  animation: slideShow 6s ease;
+  transform: translateX(200%);
+}
+@keyframes coundown {
+  0% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0px;
+  }
+}
+@keyframes slideShow {
+  0% {
+    transform: translateX(100%);
+  }
+  10% {
+    transform: translateX(-10%);
+  }
+  25% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(-10%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}

@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { BsChevronDown } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { BsChevronDown } from "react-icons/bs";
 
-function Header({ onClickOutside }) {
-  const [isShowOptionUser, setIsShowOptionUser] = useState(false);
-  const onToggleOptionUser = () => {
-    setIsShowOptionUser(!isShowOptionUser);
-  };
+function RightHeader({
+  isShowOptionUser,
+  onToggleOptionUser,
+  onClickOutside,
+  setIsShowOptionUser,
+}) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -22,22 +23,15 @@ function Header({ onClickOutside }) {
     };
   }, [onClickOutside]);
   return (
-    <div
-      id="header"
-      className="bg-[#3b7977] fixe max-h-[100px] w-full z-10 top-0 shadow"
-    >
-      <div className="w-full container mx-auto flex  flex-wrap items-center mt-0 pt-3 pb-3 ">
-        <div className="w-1/2 pl-2 md:pl-0">
-          <Link
-            to="/"
-            className="text-gray-100 text-base xl:text-xl no-underline hover:no-underline font-bold"
-          >
-            <i className="fas fa-moon text-blue-400 pr-3" />
-            Home
+    <div className="flex w-full pt-2  md:w-1/3 lg:w-1/3 xl:w-1/3 2xl:w-1/3 2xl:justify-end">
+      <ul className="list-reset flex flex-1 justify-end md:justify-between sm:justify-between items-center">
+        <li className="">
+          <Link className=" py-2 px-4 text-white no-underline" to="#">
+            Active
           </Link>
-        </div>
-        <div className="w-1/2 pr-4">
-          <div className="flex relative inline-block float-right">
+        </li>
+        <li className="">
+          <div className="flex relative float-right">
             <div
               ref={ref}
               className="relative flex items-center text-sm text-gray-100"
@@ -72,11 +66,15 @@ function Header({ onClickOutside }) {
               )}
             </div>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
   );
 }
-
-Header.propTypes = { onClickOutside: PropTypes.any };
-export default Header;
+RightHeader.propTypes = {
+  isShowOptionUser: PropTypes.bool,
+  onToggleOptionUser: PropTypes.func,
+  onClickOutside: PropTypes.any,
+  setIsShowOptionUser: PropTypes.any,
+};
+export default RightHeader;
