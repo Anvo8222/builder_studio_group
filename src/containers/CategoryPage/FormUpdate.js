@@ -2,18 +2,22 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { boderInput } from "../../styles/border";
 
-import { patchItem } from "../../api/category";
-
 function FormUpdate({ onClose, itemUpdate, onUpdateCategory }) {
+  const SignupSchema = yup.object().shape({
+    name: yup.string().required(),
+  });
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({
     criteriaMode: "all",
+    resolver: yupResolver(SignupSchema),
   });
 
   return (
@@ -36,6 +40,7 @@ function FormUpdate({ onClose, itemUpdate, onUpdateCategory }) {
               required: "This input is required.",
             })}
           />
+          {errors.name && <p className="text-red-300">{errors.name.message}</p>}
           <input
             value="Save"
             className="bg-[#3b82f6] hover:bg-[#7fabf3] w-[40%] rounded mt-[40px] cursor-pointer"

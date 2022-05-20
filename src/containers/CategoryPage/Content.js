@@ -78,6 +78,7 @@ function Content({ categories }) {
         name: data.name,
       })
     );
+    onCloseUpdateCategory();
   };
 
   const onCloseDialog = () => {
@@ -145,26 +146,26 @@ function Content({ categories }) {
         <tbody className="bg-white divide-y divide-gray-300 max-h-[200px] overflow-y-visible">
           {categories?.map((item, index) => (
             // eslint-disable-next-line no-underscore-dangle
-            <tr key={item.id} className="whitespace-nowrap bg-[#e5e5e5]">
-              <td className="px-6 py-4 text-sm text-center text-gray-500">
+            <tr key={item.id} className=" bg-[#1f2937]">
+              <td className="px-6 py-4 text-sm text-center text-white">
                 {index}
               </td>
-              <td className="px-6 py-4 text-center">
+              <td className="px-6 py-4 text-white text-center 2xl:min-w-[420px] xl:min-w-[420px] lg:min-w-[300px]">
                 <span>{item.name}</span>
               </td>
-              <td className="px-6 py-4 text-sm text-gray-500 text-center">
+              <td className="px-6 py-4 text-sm text-white text-center">
                 {formatDate(item.createdAt)}
               </td>
               <td className="px-6 py-4 cursor-pointer text-center">
                 <BiEdit
                   onClick={() => onShowUpdateCategory(item)}
-                  className="w-6 h-6 text-green-400 hover:text-green-600 cursor-pointer m-auto"
+                  className="w-6 h-6 text-[#00ff66] hover:text-green-600 cursor-pointer m-auto"
                 />
               </td>
               <td className="px-6 py-4 text-center">
                 <AiFillDelete
                   onClick={() => onDeleteCategory(item)}
-                  className="w-6 h-6 text-red-400 hover:text-red-600 cursor-pointer m-auto"
+                  className="w-6 h-6 text-[#f33333] hover:text-red-600 cursor-pointer m-auto"
                 />
               </td>
             </tr>
