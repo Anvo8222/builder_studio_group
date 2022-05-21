@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 import "./animations.css";
 import PageNotFound from "./components/PageNotFound";
 import AdminPage from "./containers/AdminPage";
-import HomePage from "./containers/HomePage";
-import "react-toastify/dist/ReactToastify.css";
-import "./index.css";
 import CategoryPage from "./containers/CategoryPage";
+import HomePage from "./containers/HomePage";
 import ProductPage from "./containers/ProductPage";
+import "./index.css";
 
 function App() {
   return (

@@ -1,10 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import axiosClients from "./axiosClient";
-import { addItem, getItem, updateItem, deleItem } from "../Slice/category";
 import { baseUrl } from "../config/index";
 import { addProducts, getProducts } from "../Slice/products";
-// set up axios - simple json-server prototype config here
-// fetch all items
+import axiosClients from "./axiosClient";
+
 const products = `${baseUrl}/studio-product`;
 const uploadLogo = `${baseUrl}/upload/single`;
 const uploadProducrs = `${baseUrl}/upload/multi`;
@@ -22,13 +19,9 @@ export function uploadImageProducts(image) {
   return async (dispatch) => {
     axiosClients
       .post(uploadProducrs, image)
-<<<<<<< HEAD
       .then((response) => {
         // console.log("response", response);
       })
-=======
-      .then((response) => {})
->>>>>>> 5589fc626a4d40774be3b84e58922db2d79b681e
       .catch((er) => {});
   };
 }

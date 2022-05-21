@@ -1153,22 +1153,12 @@
   resolved "https://registry.yarnpkg.com/@hookform/error-message/-/error-message-2.0.0.tgz#9b1b037fd816ea9b1531c06aa7fab5f5154aa740"
   integrity sha512-Y90nHzjgL2MP7GFy75kscdvxrCTjtyxGmOLLxX14nd08OXRIh9lMH/y9Kpdo0p1IPowJBiZMHyueg7p+yrqynQ==
 
-<<<<<<< HEAD
+
 =======
-<<<<<<< HEAD
-"@hookform/resolvers@^2.8.10":
-  version "2.8.10"
-  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.8.10.tgz#b66d7a7848b1b1dd5b976a73fff36bb366666e7d"
-  integrity sha512-DDFtNlugsbwAhCJHYp3NcN5LvJrwSsCLPi41Wo5O8UAIbUFnBfY/jW+zKnlX57BZ4jE0j/g6R9rB3JlO89ad0g==
-=======
->>>>>>> 5589fc626a4d40774be3b84e58922db2d79b681e
 "@hookform/resolvers@^2.8.8":
   version "2.8.8"
   resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-2.8.8.tgz#17cf806485435877fdafce9f3bee6ff68f7f87b6"
   integrity sha512-meAEDur1IJBfKyTo9yPYAuzjIfrxA7m9Ov+1nxaW/YupsqMeseWifoUjWK03+hz/RJizsVQAaUjVxFEkyu0GWg==
-<<<<<<< HEAD
-=======
->>>>>>> 6ee03524e6916b2e828395fd68d31bc4c40b91ae
 >>>>>>> 5589fc626a4d40774be3b84e58922db2d79b681e
 
 "@humanwhocodes/config-array@^0.9.2":
@@ -8901,19 +8891,13 @@ yocto-queue@^0.1.0:
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-<<<<<<< HEAD
+
 =======
-<<<<<<< HEAD
-=======
->>>>>>> 5589fc626a4d40774be3b84e58922db2d79b681e
 yub@^0.11.1:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/yub/-/yub-0.11.1.tgz#ac6d0ea65c146b7b097e7367ba7ea8ef4844562f"
   integrity sha1-rG0OplwUa3sJfnNnun6o70hEVi8=
 
-<<<<<<< HEAD
-=======
->>>>>>> 6ee03524e6916b2e828395fd68d31bc4c40b91ae
 >>>>>>> 5589fc626a4d40774be3b84e58922db2d79b681e
 yup@^0.32.11:
   version "0.32.11"
