@@ -22,7 +22,7 @@ function SideBarAdmin(props) {
           </li>
           <li className="mr-3 flex-1">
             <NavLink
-              to="#"
+              to="product"
               className={`${
                 "active" ? "border-pink-500" : false
               } block sm:py-1 py-3 pl-1 align-middle text-white no-underline hover:text-white border-b-2 border-gray-800 hover:border-pink-500`}

@@ -47,6 +47,7 @@ export function postItem(data) {
   };
 }
 export function patchItem(data) {
+  console.log(data);
   return async (dispatch) => {
     axiosClients
       // eslint-disable-next-line no-underscore-dangle

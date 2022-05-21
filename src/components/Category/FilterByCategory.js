@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { AiOutlineCheck } from "react-icons/ai";
+import { useSelector } from "react-redux";
 
-function FilterByCategory({ categorys }) {
+function FilterByCategory() {
+  const [categorys, setCategorys] = useState();
+  console.log(categorys);
+  const cate = useSelector((state) => state.category);
+
+  useEffect(() => {
+    setCategorys(cate.items);
+  }, [cate]);
   return (
     <>
       <div className="pl-[30px] flex items-end min-h-[120px] border-b border-solid border-inherit">
@@ -16,7 +24,6 @@ function FilterByCategory({ categorys }) {
             key={category.id}
             className="cursor-pointer hover:bg-[#f8f9fa] border-b border-solid border-inherit"
           >
-            {/*  eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
             <label
               className="relative pl-[30px] text-[#676b7e] font-light text-sm flex items-center leading-[50px] block w-[100%] cursor-pointer"
               htmlFor={category.name}
@@ -36,7 +43,5 @@ function FilterByCategory({ categorys }) {
     </>
   );
 }
-FilterByCategory.propTypes = {
-  categorys: PropTypes.array,
-};
+FilterByCategory.propTypes = {};
 export default FilterByCategory;

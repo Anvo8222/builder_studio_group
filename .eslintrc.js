@@ -4,6 +4,9 @@ module.exports = {
     es2021: true,
   },
   extends: ["plugin:react/recommended", "airbnb"],
+  globals: {
+    SwaggerEditor: false
+  },
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -14,6 +17,7 @@ module.exports = {
   plugins: ["react"],
   rules: {
     quotes: 0,
+    "linebreak-style": 0,
     "no-unused-vars": 0,
     "import/no-extraneous-dependencies": 0,
     "react/forbid-prop-types": 0,
@@ -40,5 +44,6 @@ module.exports = {
     "jsx-a11y/no-redundant-roles": 0,
     "jsx-a11y/anchor-is-valid": 0,
     "prefer-template": 0,
+    "arrow-body-style": "off",
   },
 };
