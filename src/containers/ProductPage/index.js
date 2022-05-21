@@ -4,7 +4,7 @@ import { BiEdit } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchItems } from "../../api/category";
 import { fetchProducs } from "../../api/productsAuth";
-// import { baseImg } from "../../config";
+import { baseImg } from "../../config";
 import CreateProduct from "./CreateProduct";
 
 function ProductPage(props) {
@@ -62,7 +62,7 @@ function ProductPage(props) {
                       className="text-sm text-gray-900"
                       width="50px"
                       alt=""
-                      // src={`${baseImg}/${item.imgLogo}`}
+                      src={`${baseImg}/${item.imgLogo}`}
                     />
                   </td>
                   <td className="px-6 py-4 text-sm text-white">

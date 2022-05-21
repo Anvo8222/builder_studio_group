@@ -22,9 +22,13 @@ export function uploadImageProducts(image) {
   return async (dispatch) => {
     axiosClients
       .post(uploadProducrs, image)
+<<<<<<< HEAD
       .then((response) => {
         // console.log("response", response);
       })
+=======
+      .then((response) => {})
+>>>>>>> 5589fc626a4d40774be3b84e58922db2d79b681e
       .catch((er) => {});
   };
 }

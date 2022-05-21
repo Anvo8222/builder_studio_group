@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -45,7 +46,9 @@ function LoginPage() {
         await login.loginAdmin(admin);
         navigate(LOGIN_PAGE_ADMIN);
       } catch (error) {
-        console.log("Login failed, please check your email and passwords");
+        toast.error("Login Error !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     };
     loginAdmin();
