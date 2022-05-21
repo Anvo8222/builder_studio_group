@@ -40,5 +40,6 @@ module.exports = {
     "jsx-a11y/no-redundant-roles": 0,
     "jsx-a11y/anchor-is-valid": 0,
     "prefer-template": 0,
+    "linebreak-style": 0,
   },
 };
