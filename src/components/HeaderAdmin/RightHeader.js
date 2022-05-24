@@ -22,6 +22,18 @@ function RightHeader({
       document.removeEventListener("click", handleClickOutside, true);
     };
   }, [onClickOutside]);
+
+  // const handleLogout = () => {
+  //   const logoutAdmin = async () => {
+  //     try {
+  //       await login.logoutAdmin(refreshToken);
+  //       navigate(LOGIN_PAGE_ADMIN);
+  //     } catch (error) {
+  //       console.log("logout fails");
+  //     }
+  //   };
+  //   logoutAdmin();
+  // };
   return (
     <div className="flex w-full pt-2  md:w-1/3 lg:w-1/3 xl:w-1/3 2xl:w-1/3 2xl:justify-end">
       <ul className="list-reset flex flex-1 justify-end md:justify-between sm:justify-between items-center">
@@ -53,12 +65,14 @@ function RightHeader({
               {isShowOptionUser ? (
                 <ul className="bg-gray-900 rounded shadow-md mt-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30">
                   <li>
-                    <Link
-                      to="!#"
+                    <div
+                      // onClick={() => handleLogout()}
+                      role="button"
+                      tabIndex="0"
                       className="px-4 py-2 block text-gray-100 hover:bg-gray-800 no-underline hover:no-underline"
                     >
                       Logout
-                    </Link>
+                    </div>
                   </li>
                 </ul>
               ) : (
