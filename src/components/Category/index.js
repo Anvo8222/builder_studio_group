@@ -36,16 +36,14 @@ function Category(props) {
             <FilterByCategory categorys={categorys} />
             <FilterByCost costs={costs} />
           </div>
-          <div className="lg:block md:block sm:block xl:hidden 2xl:hidden max-h-[70vh] pb-4">
-            {isMenuShowFilter ? (
-              <>
-                <FilterByCategory categorys={categorys} />
-                <FilterByCost costs={costs} />
-              </>
-            ) : (
-              false
-            )}
-          </div>
+          {isMenuShowFilter ? (
+            <div className="lg:block md:block sm:block xl:hidden 2xl:hidden max-h-[70vh] pb-4">
+              <FilterByCategory categorys={categorys} />
+              <FilterByCost costs={costs} />
+            </div>
+          ) : (
+            false
+          )}
         </div>
       </div>
     </>

@@ -12,11 +12,11 @@ import { baseUrl } from "../config/index";
 // set up axios - simple json-server prototype config here
 // fetch all items
 const catelogy = `${baseUrl}/studio-categories`;
-export function fetchItems(page) {
+export function fetchItems(data) {
   return async (dispatch) => {
     axiosClients
       // eslint-disable-next-line no-unneeded-ternary
-      .get(`${catelogy}?page=${page ? page + 1 : 1}`)
+      .get(`${catelogy}?page=${data.page}&limit=${data.limit}`)
       .then((response) => {
         dispatch(getItem(response.data));
         dispatch(getTotal(response.total));
@@ -30,6 +30,7 @@ export function fetchItems(page) {
 }
 
 export function postItem(data) {
+  console.log("data", data);
   return async (dispatch) => {
     axiosClients
       .post(catelogy, data)
@@ -47,7 +48,6 @@ export function postItem(data) {
   };
 }
 export function patchItem(data) {
-  console.log(data);
   return async (dispatch) => {
     axiosClients
       // eslint-disable-next-line no-underscore-dangle

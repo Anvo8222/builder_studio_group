@@ -1,9 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { GrAdd } from "react-icons/gr";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { moneyFormatterToK } from "../../utils/formatMoney";
+import { baseImg } from "../../config";
 import currencyList from "../../data/currencys";
 import ViewDetailPage from "../ViewDetailPage";
 import { addToCart } from "../../Slice/cart";
@@ -64,11 +66,12 @@ function Products({ products }) {
       );
     }
   };
+
   return (
     <>
       <div className=" grid grid-cols-3 gap-8 md:grid-cols-2 md:gap-4 sm:grid-cols-1 sm:gap-2">
         {products?.map((product) => (
-          <div className="relative" key={product.id}>
+          <div className="relative" key={product._id}>
             <div
               role="button"
               tabIndex="0"
@@ -77,7 +80,11 @@ function Products({ products }) {
             >
               <div className="flex justify-between items-center">
                 <div className="flex">
-                  <img className="w-9 h-9 mt-2" src={product.logo} alt="ssss" />
+                  <img
+                    className="w-9 h-9 mt-2"
+                    src={`${baseImg}/${product.imgLogo}`}
+                    alt={`ảnh ${product.name}`}
+                  />
                   <div className="ml-2">
                     <span className="text-xs text-[#83889e]">
                       {" "}
@@ -100,14 +107,14 @@ function Products({ products }) {
                 <img
                   className="h-[148px] m-auto"
                   alt="img"
-                  src={product.features[0]?.image}
+                  src={`${baseImg}/${product.imgProduct[0]}`}
                 />
               </div>
               <div>
                 <span className="text-[#83889e] text-xs">
                   INCLUDED FEATURES
                 </span>
-                <div className="block">
+                {/* <div className="block">
                   <span className="text-[#3c3e49] text-xs">
                     {product.features.slice(0, 3).map((item, index) => (
                       <span key={index}>{(index ? ", " : "") + item.name}</span>
@@ -119,7 +126,7 @@ function Products({ products }) {
                   <span>+ </span>
                   {product.features.length - 3}
                   <span> other features</span>
-                </span>
+                </span> */}
               </div>
               <div className="flex relative justify-between items-center border-t border-solid mt-4 pt-2">
                 <div className="">
@@ -128,7 +135,7 @@ function Products({ products }) {
                     <span className="mr-2 flex items-center text-center font-bold text-[#3c3e49]">
                       <newCurrency.icon />
                       {moneyFormatterToK(
-                        Number(product.costPublic * newCurrency.value)
+                        Number(product.price * newCurrency.value)
                       )}
                     </span>
                     <div className="block">

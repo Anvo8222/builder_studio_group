@@ -1,5 +1,5 @@
 import { baseUrl } from "../config/index";
-import { addProducts, getProducts } from "../Slice/products";
+import { addProducts, getProducts, getTotalProducts } from "../Slice/products";
 import axiosClients from "./axiosClient";
 
 const products = `${baseUrl}/studio-product`;
@@ -37,12 +37,13 @@ export function createProduct(value) {
   };
 }
 
-export function fetchProducs() {
+export function fetchProducs(page) {
   return async (dispatch) => {
     axiosClients
-      .get(products)
+      .get(`${products}?page=${page ? page + 1 : 1}`)
       .then((response) => {
         dispatch(getProducts(response.data));
+        dispatch(getTotalProducts(response.total));
       })
       .catch((er) => {});
   };

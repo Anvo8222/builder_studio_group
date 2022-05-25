@@ -4,9 +4,9 @@ import { Nav, NavLink } from "react-router-dom";
 
 function SideBarAdmin(props) {
   return (
-    <div className="bg-gray-800 shadow-xl h-20 fixed bottom-0 md:relative lg:relative xl:relative 2xl:relative md:h-screen lg:h-screen xl:h-screen 2xl:h-screen z-10 sm:w-full min-w-[200px] content-center">
-      <div className="md:mt-12 lg:mt-12 xl:mt-12 2xl:mt-12 md:w-48 lg:w-48 xl:w-48 2xl:w-48 md:fixed lg:fixed xl:fixed 2xl:fixed left-0 top-0 sm:content-center content-start text-left justify-between">
-        <ul className="list-reset flex sm:flex-row flex-col pt-3 sm:py-[0] py-3 sm:px-1 px-2 sm:text-center text-left">
+    <div className="bg-gray-800 mt-[58px] shadow-xl h-20 fixed bottom-0 md:relative lg:relative xl:relative 2xl:relative md:h-screen lg:h-screen xl:h-screen 2xl:h-screen z-10 sm:w-full min-w-[200px] content-center">
+      <div className="md:mt-12 lg:mt-12 xl:mt-12 2xl:mt-12 contents md:w-48 lg:w-48 xl:w-48 2xl:w-48 left-0 top-0 sm:content-center content-start text-left justify-between">
+        <ul className="list-reset lg:fixed xl:fixed md:fixed 2xl:fixed flex sm:flex-row flex-col pt-3 sm:py-[0] py-3 sm:px-1 px-2 sm:text-center text-left">
           <li className="mr-3 flex-1">
             <NavLink
               to="category"

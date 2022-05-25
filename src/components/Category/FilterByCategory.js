@@ -14,9 +14,7 @@ function FilterByCategory() {
   return (
     <>
       <div className="pl-[30px] flex items-end min-h-[120px] border-b border-solid border-inherit">
-        <h2 className="font-semibold leading-[50px] text-xs">
-          Filter by category
-        </h2>
+        <h2 className="font-semibold text-xs">Filter by category</h2>
       </div>
       <ul>
         {categorys?.map((category) => (

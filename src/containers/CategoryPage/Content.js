@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
@@ -9,6 +10,8 @@ import {
 import { BiEdit } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import {
   deleteItem,
   fetchItems,
@@ -20,6 +23,11 @@ import { boderInput } from "../../styles/border";
 import { formatDate } from "../../utils/formatDate";
 import FormUpdate from "./FormUpdate";
 
+const SignupSchema = yup
+  .object({
+    name: yup.string().required().trim(),
+  })
+  .required();
 function Content({ categories }) {
   const [isShowFormAddCategory, setIsShowFormAddCategory] = useState(false);
   const [isShowEditCategory, setIsShowEditCategory] = useState(false);
@@ -38,13 +46,14 @@ function Content({ categories }) {
     reset,
   } = useForm({
     criteriaMode: "all",
+    resolver: yupResolver(SignupSchema),
   });
   const dispatch = useDispatch();
   const onSubmitAddNewCategory = (data) => {
-    dispatch(postItem(data));
+    console.log("data", data);
+    dispatch(postItem({ ...data, name: data.name.trim() }));
     reset();
   };
-
   const onShowUpdateCategory = (item) => {
     setIsShowEditCategory(true);
     setItemUpdateCategory(item);
@@ -75,7 +84,7 @@ function Content({ categories }) {
       patchItem({
         // eslint-disable-next-line no-underscore-dangle
         _id: itemUpdateCategory._id,
-        name: data.name,
+        name: data.name.trim(),
       })
     );
     onCloseUpdateCategory();
@@ -117,12 +126,16 @@ function Content({ categories }) {
             />
             <input
               className={`m-auto px-2 block rounded mb-2 ${boderInput}`}
-              name="name"
               placeholder="Add New Category"
               {...register("name", {
-                required: "This input is required.",
+                required: true,
               })}
             />
+            {errors.name && errors.name.type === "required" && (
+              <p className="text-center text-red-300">
+                Category name invalid value
+              </p>
+            )}
             <input
               className="bg-[#6c00ea] m-auto block w-[100px] rounded text-white cursor-pointer"
               type="submit"
