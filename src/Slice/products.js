@@ -40,5 +40,6 @@ export const {
   getProductId,
   updateProductById,
   deleteProductById,
+  getTotalProducts,
 } = actions;
 export default reducer;
