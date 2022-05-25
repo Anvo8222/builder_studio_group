@@ -1,25 +1,20 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-import { AiOutlineFolderAdd, AiFillDelete } from "react-icons/ai";
-import ReactPaginate from "react-paginate";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchItems } from "../../api/category";
-import { fetchProducs } from "../../api/productsAuth";
-import Content from "./Content";
-import CreateProduct from "./CreateProduct";
-=======
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect } from 'react';
-import { AiOutlineFolderAdd, AiFillDelete } from 'react-icons/ai';
-import { BiEdit } from 'react-icons/bi';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchItems } from '../../api/category';
-import { fetchProducs, fetchProductId, deleteProductId } from '../../api/productsAuth';
-import { baseImg } from '../../config';
-import CreateProduct from './CreateProduct';
-import AreYouSure from '../../components/Dialogs/AreYouSure';
->>>>>>> 021b17a2799633d9a365aac8f1c4dfb511c63292
+import React, { useState, useEffect } from "react";
+import { AiOutlineFolderAdd, AiFillDelete } from "react-icons/ai";
+import { BiEdit } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import ReactPaginate from "react-paginate";
+import { fetchItems } from "../../api/category";
+import {
+  fetchProducs,
+  fetchProductId,
+  deleteProductId,
+} from "../../api/productsAuth";
+import { baseImg } from "../../config";
+import CreateProduct from "./CreateProduct";
+import AreYouSure from "../../components/Dialogs/AreYouSure";
+import Content from "../CategoryPage/Content";
 
 function ProductPage(props) {
   const dispatch = useDispatch();
@@ -27,17 +22,14 @@ function ProductPage(props) {
   const [isShowAddNewProducts, setShowAddNewProducts] = useState(false);
   const [pageCount, setPageCount] = useState(0);
   const products = useSelector((state) => state.products.products);
-<<<<<<< HEAD
   const total = useSelector((state) => state.products.total);
-=======
   const category = useSelector((state) => state.category.items);
   const [dialog, setDialog] = useState({
-    message: '',
+    message: "",
     isLoading: false,
-    nameItem: '',
+    nameItem: "",
   });
 
->>>>>>> 021b17a2799633d9a365aac8f1c4dfb511c63292
   const isModelAddProducts = () => {
     setShowAddNewProducts(true);
   };
@@ -61,7 +53,7 @@ function ProductPage(props) {
   };
 
   function handleDeleteCategory(value) {
-    handleDialog('Are you sure you want to delete?', true, value.name);
+    handleDialog("Are you sure you want to delete?", true, value.name);
     setCurrentId(value._id);
   }
 
@@ -84,19 +76,16 @@ function ProductPage(props) {
     dispatch(fetchItems());
     dispatch(fetchProducs());
   }, []);
-<<<<<<< HEAD
   useEffect(() => {
     setPageCount(Math.ceil(total / 8));
   }, [products]);
   const handlePageClick = (event) => {
     dispatch(fetchProducs(event.selected));
   };
-=======
 
   useEffect(() => {
     dispatch(fetchProductId(currentId));
   }, [currentId]);
->>>>>>> 021b17a2799633d9a365aac8f1c4dfb511c63292
   return (
     <>
       <div className="sm:mt-[100px] sm:mb-[100px] mt-[58px] w-full bg-[#111827]">
@@ -111,9 +100,7 @@ function ProductPage(props) {
               Add new prodcrs
             </button>
           </div>
-<<<<<<< HEAD
           <Content products={products} />
-=======
           <table className="divide-y divide-gray-300 ">
             <thead className="bg-gray-50">
               <tr className="bg-[#11111d]">
@@ -162,7 +149,6 @@ function ProductPage(props) {
               ))}
             </tbody>
           </table>
->>>>>>> 021b17a2799633d9a365aac8f1c4dfb511c63292
         </div>
         <ReactPaginate
           breakLabel="..."
