@@ -10,6 +10,7 @@ function CategoryPage(props) {
   const total = useSelector((state) => state.category.total);
   const [pageCount, setPageCount] = useState(0);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(
       fetchItems({
@@ -18,9 +19,11 @@ function CategoryPage(props) {
       })
     );
   }, [dispatch]);
+
   useEffect(() => {
     setPageCount(Math.ceil(total / 8));
   }, [categories]);
+<<<<<<< HEAD
   const handlePageClick = (page) => {
     dispatch(
       fetchItems({
@@ -28,6 +31,11 @@ function CategoryPage(props) {
         limit: 8,
       })
     );
+=======
+
+  const handlePageClick = (event) => {
+    dispatch(fetchItems(event.selected));
+>>>>>>> 021b17a2799633d9a365aac8f1c4dfb511c63292
   };
   return (
     <div className="sm:mt-[100px] sm:mb-[100px] mt-[58px] w-full bg-[#111827]">
