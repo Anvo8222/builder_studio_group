@@ -50,6 +50,7 @@ code {
   margin-top: -4px;
 }
 .slick-list {
+  width: 100%;
   margin: 0 -7px !important;
 }
 @media only screen and (max-width: 600px) {

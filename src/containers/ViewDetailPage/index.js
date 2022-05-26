@@ -29,7 +29,6 @@ function ViewDetailPage({
   const onAddToCart = (product) => {
     dispatch(addToCart(product));
   };
-
   return (
     <div className="fixed justify-center items-center flex inset-0 z-50">
       <div className="fixed bg-[#ccc] inset-0 opacity-40"></div>

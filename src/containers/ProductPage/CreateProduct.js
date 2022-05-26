@@ -1,61 +1,64 @@
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable operator-linebreak */
+/* eslint-disable indent */
+/* eslint-disable react/jsx-indent */
 /* eslint-disable no-unused-expressions */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import React, { useEffect, useState } from 'react';
-import { AiOutlineFolderAdd, AiOutlineCloseCircle } from 'react-icons/ai';
-import { useDispatch, useSelector } from 'react-redux';
-import { useForm, Controller } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import PropTypes from 'prop-types';
-import { boderInput } from '../../styles/border';
+import React, { useEffect, useState } from "react";
+import { AiOutlineFolderAdd, AiOutlineCloseCircle } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm, Controller } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import PropTypes from "prop-types";
+import { boderInput } from "../../styles/border";
 import {
   createProduct,
   uploadImageLogo,
   uploadImageProducts,
   updateProductId,
-} from '../../api/productsAuth';
-import { SUPPORTED_FORMATS } from '../../utils/supportFormats';
-import { baseImg } from '../../config';
+} from "../../api/productsAuth";
+import { SUPPORTED_FORMATS } from "../../utils/supportFormats";
+import { baseImg } from "../../config";
 
 function CreateProduct({ oncloseProducts, categories, currentId }) {
   const dispatch = useDispatch();
   const [pictureLogo, setPictureLogo] = useState(null);
   const [pictureProducts, setPictureProducts] = useState([]);
-  const [formatterValue, setFormatterValue] = useState('');
+  const [formatterValue, setFormatterValue] = useState("");
   const [previewLogo, setPreviewLogo] = useState();
   const [previewSlide, setPreviewSlide] = useState([]);
   const currentProductId = useSelector((state) => state.products.productId);
 
   const defaultValues = {
-    name: currentProductId ? currentProductId?.name : '',
-    price: currentProductId ? currentProductId?.price : '',
-    description: currentProductId ? currentProductId?.description : '',
-    categoryId: currentProductId ? currentProductId?.categoryId : '',
-    imgLogo: currentProductId ? currentProductId?.imgLogo : '',
-    imgProduct: currentProductId ? currentProductId?.imgProduct : '',
+    name: currentProductId ? currentProductId?.name : "",
+    price: currentProductId ? currentProductId?.price : "",
+    description: currentProductId ? currentProductId?.description : "",
+    categoryId: currentProductId ? currentProductId?.categoryId : "",
+    imgLogo: currentProductId ? currentProductId?.imgLogo : "",
+    imgProduct: currentProductId ? currentProductId?.imgProduct : "",
   };
 
+  console.log("categories", categories);
+
   const createSchema = yup.object().shape({
-    name: yup.string().required('Please enter name !'),
+    name: yup.string().required("Please enter name !"),
     price: yup
       .string()
-      .required('Please enter price !')
-      .min(1, 'Price must be more than 1 $ !'),
-    categoryId: yup.string().required('Please choice your category !'),
-    description: yup.string().required('Please enter description !'),
+      .required("Please enter price !")
+      .min(1, "Price must be more than 1 $ !"),
+    categoryId: yup.string().required("Please choice your category !"),
+    description: yup.string().required("Please enter description !"),
     imgUrl: yup
       .mixed()
+      .test("required", "Image not be empty", (value) => value && value.length)
       .test(
-        'required',
-        'Image not be empty',
-        (value) => value && value.length
+        "type",
+        "Unsupported",
+        (value) =>
+          value && value[0] && SUPPORTED_FORMATS.includes(value[0].type)
       )
-      .test(
-        'type',
-        'Unsupported',
-        (value) => value && value[0] && SUPPORTED_FORMATS.includes(value[0].type)
-      )
-      .test('size', 'Size too big', (value) => {
+      .test("size", "Size too big", (value) => {
         if (value && value[0]) {
           return value[0].size < 5 * 1024 * 1024;
         }
@@ -64,22 +67,22 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
   });
 
   const updateSchema = yup.object().shape({
-    name: yup.string().required('Please enter name !'),
+    name: yup.string().required("Please enter name !"),
     price: yup
       .string()
-      .required('Please enter price !')
-      .min(1, 'Price must be more than 1 $ !'),
-    categoryId: yup.string().required('Please choice your category !'),
-    description: yup.string().required('Please enter description !'),
+      .required("Please enter price !")
+      .min(1, "Price must be more than 1 $ !"),
+    categoryId: yup.string().required("Please choice your category !"),
+    description: yup.string().required("Please enter description !"),
     imgUrl: yup
       .mixed()
-      .test('type', 'Unsupported', (value) => {
+      .test("type", "Unsupported", (value) => {
         if (value && value[0]) {
           return SUPPORTED_FORMATS.includes(value[0].type);
         }
         return true;
       })
-      .test('size', 'Size too big', (value) => {
+      .test("size", "Size too big", (value) => {
         if (value && value[0]) {
           return value[0].size < 10 * 1024 * 1024;
         }
@@ -93,10 +96,12 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
     formState: { errors },
     reset,
   } = useForm({
-    mode: 'onChange',
-    resolver: yupResolver(Object.keys(currentProductId).length > 0 ? updateSchema : createSchema),
+    mode: "onChange",
+    resolver: yupResolver(
+      Object.keys(currentProductId).length > 0 ? updateSchema : createSchema
+    ),
     defaultValues,
-    criteriaMode: 'all',
+    criteriaMode: "all",
   });
 
   const handleCloseProducts = () => {
@@ -117,7 +122,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
     file.preview = URL.createObjectURL(file);
     setPreviewLogo(file);
     setPictureLogo(e.target.files[0].name);
-    formData.append('imgUrl', e.target.files[0]);
+    formData.append("imgUrl", e.target.files[0]);
     // console.table(Object.fromEntries(formData));
     dispatch(uploadImageLogo(formData));
   };
@@ -136,7 +141,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
         newArrPreview.push(imgProducts[item]),
         setPreviewSlide([...newArrPreview]),
         newArrPicture.push(imgProducts[item].name),
-        formData.append('imgStudioUrl', imgProducts[item])
+        formData.append("imgStudioUrl", imgProducts[item])
       );
     });
     setPictureProducts(newArrPicture);
@@ -145,7 +150,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
 
   const handleChangeCurrency = (e) => {
     const num = e.target.value.toString();
-    const format = num.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const format = num.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     setFormatterValue(format);
   };
 
@@ -165,7 +170,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
       };
       dispatch(updateProductId(newValue));
     } else {
-      const newPrice = value.price.split('.').join('');
+      const newPrice = value.price.split(".").join("");
       const newValue = {
         name: value.name,
         imgLogo: pictureLogo,
@@ -202,7 +207,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter name..."
-            {...register('name')}
+            {...register("name")}
           />
           {errors.name && <p className="text-red-600">{errors.name.message}</p>}
         </div>
@@ -216,7 +221,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
             type="text"
             value={formatterValue}
             defaultValue={currentProductId.price}
-            {...register('price', {
+            {...register("price", {
               onChange: (e) => handleChangeCurrency(e),
               onBlur: (e) => handleChangeCurrency(e),
             })}
@@ -234,7 +239,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
             id="name"
             type="text"
             placeholder="Enter description..."
-            {...register('description')}
+            {...register("description")}
           />
           {errors.description && (
             <p className="text-red-600">{errors.description.message}</p>
@@ -247,7 +252,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
           <div className="relative">
             <select
               className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              {...register('categoryId')}
+              {...register("categoryId")}
             >
               <option value="">--Vui lòng chọn--</option>
               {categories?.map((item) => (
@@ -268,7 +273,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
             type="file"
             accept="image/png, image/gif, image/jpeg, image/jpg"
             name="imgUrl"
-            {...register('imgUrl', {
+            {...register("imgUrl", {
               onChange: (e) => onChangeImageLogo(e),
               onBlur: (e) => onChangeImageLogo(e),
             })}
@@ -285,7 +290,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
               src={
                 Object.keys(currentProductId).length > 0
                   ? `${baseImg}/${currentProductId.imgLogo}`
-                  : ''
+                  : ""
               }
               alt=""
               width="90px"
@@ -306,7 +311,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
             name="imgStudioUrl"
             accept="image/png, image/gif, image/jpeg, image/jpg"
             multiple="multiple"
-            {...register('imgStudioUrl', {
+            {...register("imgStudioUrl", {
               onChange: (e) => onChangeImgProducts(e),
               onBlur: (e) => onChangeImgProducts(e),
             })}
@@ -314,16 +319,16 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
           <div className="flex w-full overflow-auto">
             {previewSlide.length > 0
               ? previewSlide.map((item) => (
-                <img src={item.preview} alt="" className="mt-3 mr-2 w-1/3" />
-              ))
-              : Array.isArray(currentProductId?.imgProduct)
-                && currentProductId?.imgProduct.length > 0
-                && currentProductId?.imgProduct.map((item) => (
+                  <img src={item.preview} alt="" className="mt-3 mr-2 w-1/3" />
+                ))
+              : Array.isArray(currentProductId?.imgProduct) &&
+                currentProductId?.imgProduct.length > 0 &&
+                currentProductId?.imgProduct.map((item) => (
                   <img
                     src={
                       Object.keys(currentProductId).length > 0
                         ? `${baseImg}/${item}`
-                        : ''
+                        : ""
                     }
                     alt=""
                     className="mt-3 mr-2 w-1/3"

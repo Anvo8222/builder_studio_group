@@ -50,7 +50,6 @@ function Content({ categories }) {
   });
   const dispatch = useDispatch();
   const onSubmitAddNewCategory = (data) => {
-    console.log("data", data);
     dispatch(postItem({ ...data, name: data.name.trim() }));
     reset();
   };
@@ -99,9 +98,6 @@ function Content({ categories }) {
   };
   return (
     <>
-      <div>
-        <ToastContainer />
-      </div>
       <div className="flex items-center mb-4">
         {!isShowFormAddCategory ? (
           <button

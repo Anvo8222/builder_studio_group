@@ -14,7 +14,6 @@ import {
 import { baseImg } from "../../config";
 import CreateProduct from "./CreateProduct";
 import AreYouSure from "../../components/Dialogs/AreYouSure";
-import Content from "../CategoryPage/Content";
 
 function ProductPage(props) {
   const dispatch = useDispatch();
@@ -100,7 +99,6 @@ function ProductPage(props) {
               Add new prodcrs
             </button>
           </div>
-          <Content products={products} />
           <table className="divide-y divide-gray-300 ">
             <thead className="bg-gray-50">
               <tr className="bg-[#11111d]">
