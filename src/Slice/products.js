@@ -1,13 +1,17 @@
 /* eslint-disable no-underscore-dangle */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const productReducer = createSlice({
-  name: 'product',
+  name: "product",
   initialState: {
     products: [],
+    total: 0,
     productId: {},
   },
   reducers: {
+    getTotalProducts(state, action) {
+      state.total = action.payload;
+    },
     getProducts(state, action) {
       state.products = action.payload;
     },
@@ -36,5 +40,6 @@ export const {
   getProductId,
   updateProductById,
   deleteProductById,
+  getTotalProducts,
 } = actions;
 export default reducer;

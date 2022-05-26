@@ -1,25 +1,32 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect } from 'react';
-import { AiOutlineFolderAdd, AiFillDelete } from 'react-icons/ai';
-import { BiEdit } from 'react-icons/bi';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchItems } from '../../api/category';
-import { fetchProducs, fetchProductId, deleteProductId } from '../../api/productsAuth';
-import { baseImg } from '../../config';
-import CreateProduct from './CreateProduct';
-import AreYouSure from '../../components/Dialogs/AreYouSure';
+import React, { useState, useEffect } from "react";
+import { AiOutlineFolderAdd, AiFillDelete } from "react-icons/ai";
+import { BiEdit } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import ReactPaginate from "react-paginate";
+import { fetchItems } from "../../api/category";
+import {
+  fetchProducs,
+  fetchProductId,
+  deleteProductId,
+} from "../../api/productsAuth";
+import { baseImg } from "../../config";
+import CreateProduct from "./CreateProduct";
+import AreYouSure from "../../components/Dialogs/AreYouSure";
 
 function ProductPage(props) {
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
   const [isShowAddNewProducts, setShowAddNewProducts] = useState(false);
+  const [pageCount, setPageCount] = useState(0);
   const products = useSelector((state) => state.products.products);
+  const total = useSelector((state) => state.products.total);
   const category = useSelector((state) => state.category.items);
   const [dialog, setDialog] = useState({
-    message: '',
+    message: "",
     isLoading: false,
-    nameItem: '',
+    nameItem: "",
   });
 
   const isModelAddProducts = () => {
@@ -45,7 +52,7 @@ function ProductPage(props) {
   };
 
   function handleDeleteCategory(value) {
-    handleDialog('Are you sure you want to delete?', true, value.name);
+    handleDialog("Are you sure you want to delete?", true, value.name);
     setCurrentId(value._id);
   }
 
@@ -66,18 +73,21 @@ function ProductPage(props) {
 
   useEffect(() => {
     dispatch(fetchItems());
-  }, []);
-
-  useEffect(() => {
     dispatch(fetchProducs());
   }, []);
+  useEffect(() => {
+    setPageCount(Math.ceil(total / 8));
+  }, [products]);
+  const handlePageClick = (event) => {
+    dispatch(fetchProducs(event.selected));
+  };
 
   useEffect(() => {
     dispatch(fetchProductId(currentId));
   }, [currentId]);
   return (
     <>
-      <div className="sm:mt-[100px] sm:mb-[100px] mt-[62px] w-full bg-[#111827]">
+      <div className="sm:mt-[100px] sm:mb-[100px] mt-[58px] w-full bg-[#111827]">
         <div className="basis-10/12 flex flex-col xl:max-w-[800px] 2xl:max-w-[800px] lg:max-w-[660px] m-auto container border-b border-gray-200 shadow">
           <div className="flex items-center mb-4">
             <button
@@ -138,8 +148,22 @@ function ProductPage(props) {
             </tbody>
           </table>
         </div>
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel=">>"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="<<"
+          renderOnZeroPageCount={null}
+          pageClassName="px-[6px]"
+          className="flex justify-center mt-2 items-center mb-2"
+          pageLinkClassName="text-base bg-[#1f2937] text-gray-400 py-[4px] px-[6px]"
+          activeLinkClassName="font-bold"
+          previousClassName="text-gray-400 px-[4px] bg-[#1f2937] text-base py-[1px] border-sky-500"
+          nextClassName="text-gray-400 px-[4px] bg-[#1f2937] text-base py-[1px] border-sky-500"
+        />
       </div>
-
       {isShowAddNewProducts && (
         <CreateProduct
           oncloseProducts={oncloseProducts}

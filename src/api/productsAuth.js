@@ -1,7 +1,14 @@
-import { ToastContainer, toast } from 'react-toastify';
-import { baseUrl } from '../config/index';
-import { addProducts, getProducts, getProductId, updateProductById, deleteProductById } from '../Slice/products';
-import axiosClients from './axiosClient';
+import { ToastContainer, toast } from "react-toastify";
+import { baseUrl } from "../config/index";
+import {
+  addProducts,
+  getProducts,
+  getProductId,
+  updateProductById,
+  deleteProductById,
+  getTotalProducts,
+} from "../Slice/products";
+import axiosClients from "./axiosClient";
 
 const products = `${baseUrl}/studio-product`;
 const uploadLogo = `${baseUrl}/upload/single`;
@@ -11,8 +18,8 @@ export function uploadImageLogo(image) {
   return async (dispatch) => {
     axiosClients
       .post(uploadLogo, image)
-      .then((response) => { })
-      .catch((er) => { });
+      .then((response) => {})
+      .catch((er) => {});
   };
 }
 
@@ -23,7 +30,7 @@ export function uploadImageProducts(image) {
       .then((response) => {
         // console.log("response", response);
       })
-      .catch((er) => { });
+      .catch((er) => {});
   };
 }
 
@@ -33,22 +40,23 @@ export function createProduct(value) {
       .post(products, value)
       .then((response) => {
         dispatch(addProducts(response));
-        toast.success('Created Sucessfully !', {
+        toast.success("Created Sucessfully !", {
           position: toast.POSITION.TOP_RIGHT,
         });
       })
-      .catch((er) => { });
+      .catch((er) => {});
   };
 }
 
-export function fetchProducs() {
+export function fetchProducs(page) {
   return async (dispatch) => {
     axiosClients
-      .get(products)
+      .get(`${products}?page=${page ? page + 1 : 1}`)
       .then((response) => {
         dispatch(getProducts(response.data));
+        dispatch(getTotalProducts(response.total));
       })
-      .catch((er) => { });
+      .catch((er) => {});
   };
 }
 
@@ -60,7 +68,7 @@ export function fetchProductId(id) {
         .then((response) => {
           dispatch(getProductId(response));
         })
-        .catch((er) => { });
+        .catch((er) => {});
     } else {
       dispatch(getProductId({}));
     }

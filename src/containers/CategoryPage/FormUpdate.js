@@ -6,11 +6,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { boderInput } from "../../styles/border";
 
+const SignupSchema = yup
+  .object({
+    name: yup.string().required().trim(),
+  })
+  .required();
 function FormUpdate({ onClose, itemUpdate, onUpdateCategory }) {
-  const SignupSchema = yup.object().shape({
-    name: yup.string().required(),
-  });
-
   const {
     register,
     formState: { errors },
@@ -37,10 +38,14 @@ function FormUpdate({ onClose, itemUpdate, onUpdateCategory }) {
             defaultValue={itemUpdate.name}
             className={`${boderInput} px-2`}
             {...register("name", {
-              required: "This input is required.",
+              required: true,
             })}
           />
-          {errors.name && <p className="text-red-300">{errors.name.message}</p>}
+          {errors.name && errors.name.type === "required" && (
+            <p className="text-center text-red-300">
+              Category name invalid value
+            </p>
+          )}
           <input
             value="Save"
             className="bg-[#3b82f6] hover:bg-[#7fabf3] w-[40%] rounded mt-[40px] cursor-pointer"

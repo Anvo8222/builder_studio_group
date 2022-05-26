@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./animations.css";
 import PageNotFound from "./components/PageNotFound";
@@ -10,14 +11,17 @@ import "./index.css";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/admin" element={<AdminPage />}>
-        <Route path="category" element={<CategoryPage />} />
-        <Route path="product" element={<ProductPage />} />
-      </Route>
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+    <>
+      <ToastContainer />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin" element={<AdminPage />}>
+          <Route path="category" element={<CategoryPage />} />
+          <Route path="product" element={<ProductPage />} />
+        </Route>
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </>
   );
 }
 
