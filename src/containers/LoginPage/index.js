@@ -34,17 +34,11 @@ function LoginPage() {
   const token = localStorage.getItem("TOKEN") ?? null;
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
-  useEffect(() => {
-    if (token !== null) {
-      navigate(HOME_PAGE_ADMIN);
-    }
-  }, [token]);
-
   const handleLogin = (admin) => {
     const loginAdmin = async () => {
       try {
         await login.loginAdmin(admin);
-        navigate(LOGIN_PAGE_ADMIN);
+        navigate(HOME_PAGE_ADMIN);
       } catch (error) {
         toast.error("Login Error !", {
           position: toast.POSITION.TOP_RIGHT,

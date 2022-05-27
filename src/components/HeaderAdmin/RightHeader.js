@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import { BsChevronDown } from "react-icons/bs";
 import login from "../../api/LoginAuth";
-import { LOGIN_PAGE_ADMIN } from "../../config";
+import { HOME_PAGE_ADMIN, LOGIN_PAGE_ADMIN } from "../../config";
 
 function RightHeader({
   isShowOptionUser,
