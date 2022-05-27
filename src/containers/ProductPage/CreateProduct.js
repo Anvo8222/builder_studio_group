@@ -39,8 +39,6 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
     imgProduct: currentProductId ? currentProductId?.imgProduct : "",
   };
 
-  console.log("categories", categories);
-
   const createSchema = yup.object().shape({
     name: yup.string().required("Please enter name !"),
     price: yup
@@ -188,17 +186,19 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
   useEffect(() => {
     reset(defaultValues);
   }, [currentProductId]);
+
   return (
     <div className="absolute top-[10%] left-[30%] w-[50%]">
+      {/* <h3>Create Products</h3> */}
       <form
-        className="pt-30 bg-[#ace7e9e6] "
+        className="pt-12 bg-[#ace7e9e6] overflow-y-auto h-[550px]"
         onSubmit={handleSubmit(handleCreateProducts)}
       >
         <AiOutlineCloseCircle
           onClick={() => handleCloseProducts()}
           tabIndex="0"
           role="button"
-          className="absolute right-[10px] text-xl top-[10px] text-red-700 cursor-pointer hover:text-red-300 "
+          className="absolute right-[25px] text-xl top-[20px] text-red-700 cursor-pointer hover:text-red-300 "
         />
         <div className={`mb-4 w-2/4 m-auto block rounded mb-2 ${boderInput}`}>
           <label className="block text-gray-700 text-sm font-bold mb-2">

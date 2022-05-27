@@ -85,6 +85,18 @@ function ProductPage(props) {
   useEffect(() => {
     dispatch(fetchProductId(currentId));
   }, [currentId]);
+
+  useEffect(() => {
+    if (isShowAddNewProducts) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isShowAddNewProducts]);
+
   return (
     <>
       <div className="sm:mt-[100px] sm:mb-[100px] mt-[58px] w-full bg-[#111827]">

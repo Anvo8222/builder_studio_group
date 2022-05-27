@@ -7,6 +7,16 @@ import SideBarAdmin from "../../components/SideBarAdmin";
 import { fetchItems } from "../../api/category";
 
 function AdminPage(props) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(
+      fetchItems({
+        page: 1,
+        limit: 8,
+      })
+    );
+  }, [dispatch]);
+
   return (
     <>
       <HeaderAdmin />
