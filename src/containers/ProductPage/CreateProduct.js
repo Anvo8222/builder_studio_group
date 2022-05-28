@@ -39,8 +39,6 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
     imgProduct: currentProductId ? currentProductId?.imgProduct : "",
   };
 
-  console.log("categories", categories);
-
   const createSchema = yup.object().shape({
     name: yup.string().required("Please enter name !"),
     price: yup

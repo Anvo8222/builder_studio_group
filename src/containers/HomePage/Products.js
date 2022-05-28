@@ -10,11 +10,14 @@ import currencyList from "../../data/currencys";
 import ViewDetailPage from "../ViewDetailPage";
 import { addToCart } from "../../Slice/cart";
 import MaximumProduct from "../../components/Dialogs/MaximumProduct";
+import { getIndexProduct } from "../../Slice/products";
 
 function Products({ products }) {
   const [isShowViewDetail, setIsShowViewDetail] = useState(false);
   const [productViewDetail, setProductViewDetail] = useState(null);
+  const [nameCategoryViewDetail, setNameCategoryViewDetail] = useState(null);
   const [isShowDialog, setIsShowDialog] = useState(false);
+  const categories = useSelector((state) => state.category.items);
   const dispatch = useDispatch();
   const currency = currencyList.filter(
     (item) => item.id === useSelector((state) => state.changeCurrency)
@@ -22,9 +25,13 @@ function Products({ products }) {
   const itemInCart = useSelector((state) => state.cart);
   const newCurrency = currency[0];
 
-  const onShowViewDetail = (product) => {
+  const onShowViewDetail = (product, index) => {
+    dispatch(getIndexProduct(index));
     setIsShowViewDetail(true);
     setProductViewDetail(product);
+    setNameCategoryViewDetail(
+      categories.filter((item) => item._id === product.categoryId)
+    );
   };
   const onCloseViewDetail = () => {
     setIsShowViewDetail(false);
@@ -46,30 +53,10 @@ function Products({ products }) {
     }
   };
 
-  const onNextProduct = () => {
-    if (productViewDetail.id < products.length) {
-      setProductViewDetail(
-        products.filter((item) => item.id === productViewDetail.id + 1)[0]
-      );
-    } else {
-      setProductViewDetail(products.filter((item) => item.id === 1)[0]);
-    }
-  };
-  const onPrevProduct = () => {
-    if (productViewDetail.id === 1) {
-      setProductViewDetail(
-        products.filter((item) => item.id === products.length)[0]
-      );
-    } else {
-      setProductViewDetail(
-        products.filter((item) => item.id === productViewDetail.id - 1)[0]
-      );
-    }
-  };
   return (
     <>
       <div className=" grid grid-cols-3 gap-8 md:grid-cols-2 md:gap-4 sm:grid-cols-1 sm:gap-2">
-        {products?.map((product) => (
+        {products?.map((product, index) => (
           <div className="relative" key={product._id}>
             <div
               role="button"
@@ -113,19 +100,6 @@ function Products({ products }) {
                 <span className="text-[#83889e] text-xs">
                   INCLUDED FEATURES
                 </span>
-                {/* <div className="block">
-                  <span className="text-[#3c3e49] text-xs">
-                    {product.features.slice(0, 3).map((item, index) => (
-                      <span key={index}>{(index ? ", " : "") + item.name}</span>
-                    ))}
-                  </span>
-                </div>
-
-                <span className="text-[#3c3e49] text-xs">
-                  <span>+ </span>
-                  {product.features.length - 3}
-                  <span> other features</span>
-                </span> */}
               </div>
               <div className="flex relative justify-between items-center border-t border-solid mt-4 pt-2">
                 <div className="">
@@ -150,7 +124,7 @@ function Products({ products }) {
             <span
               role="button"
               tabIndex="0"
-              onClick={() => onShowViewDetail(product)}
+              onClick={() => onShowViewDetail(product, index)}
               className="absolute bottom-6 right-4 hover:bg-[#f8f9fa] py-2 px-6 border-inherit rounded border-solid border text-[#3c3e49] text-xs cursor-pointer"
             >
               View Details
@@ -160,10 +134,9 @@ function Products({ products }) {
       </div>
       {isShowViewDetail ? (
         <ViewDetailPage
-          productViewDetail={productViewDetail}
+          product={productViewDetail}
+          nameCategoryViewDetail={nameCategoryViewDetail}
           onCloseViewDetail={onCloseViewDetail}
-          onNextProduct={onNextProduct}
-          onPrevProduct={onPrevProduct}
         />
       ) : (
         false

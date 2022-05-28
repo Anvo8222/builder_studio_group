@@ -76,6 +76,7 @@ export function fetchProductId(id) {
 }
 
 export function updateProductId(value) {
+  console.log("value", value);
   return async (dispatch) => {
     axiosClients
       // eslint-disable-next-line no-underscore-dangle

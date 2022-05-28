@@ -1,10 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable indent */
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { addToCart } from "../../Slice/cart";
+import { getIndexProduct } from "../../Slice/products";
 import { currency } from "../../utils/selectCurrency";
 import Description from "./Description";
 import Footer from "./Footer";
@@ -12,22 +14,48 @@ import Header from "./Header";
 import ShowImage from "./ShowImage";
 
 function ViewDetailPage({
-  productViewDetail,
+  product,
   onCloseViewDetail,
-  onNextProduct,
-  onPrevProduct,
+  nameCategoryViewDetail,
 }) {
   const [featureIndex, setFeatureIndex] = useState(0);
+  const [productViewDetail, setProductViewDetail] = useState(product);
+  const [nameCategory, setNameCategory] = useState(nameCategoryViewDetail);
   const itemInCart = useSelector((state) => state.cart);
   const idCurrency = useSelector((state) => state.changeCurrency);
+  const categories = useSelector((state) => state.category);
   const dispatch = useDispatch();
   const newCurrency = currency(idCurrency)[0];
-
   const onChangeImageFeatureIndex = (index) => {
     setFeatureIndex(index);
   };
-  const onAddToCart = (product) => {
-    dispatch(addToCart(product));
+  const onAddToCart = (item) => {
+    dispatch(addToCart(item));
+  };
+  const products = useSelector((state) => state.products.products);
+  const indexProduct = useSelector((state) => state.products.indexProduct);
+  useEffect(() => {
+    setProductViewDetail(products[indexProduct]);
+    setNameCategory(
+      categories.items.filter(
+        (item) => item._id === products[indexProduct].categoryId
+      )
+    );
+  }, [indexProduct]);
+
+  const nextProductViewDetail = () => {
+    if (indexProduct === products.length - 1) {
+      dispatch(getIndexProduct(0));
+    } else {
+      dispatch(getIndexProduct(indexProduct + 1));
+    }
+  };
+  const prevProductViewDetail = () => {
+    if (indexProduct === 0) {
+      dispatch(getIndexProduct(products.length - 1));
+    } else {
+      dispatch(getIndexProduct(indexProduct - 1));
+    }
   };
   return (
     <div className="fixed justify-center items-center flex inset-0 z-50">
@@ -44,6 +72,7 @@ function ViewDetailPage({
             <Description
               productViewDetail={productViewDetail}
               newCurrency={newCurrency}
+              nameCategory={nameCategory}
             />
           </div>
         </div>
@@ -51,17 +80,17 @@ function ViewDetailPage({
           onAddToCart={onAddToCart}
           productViewDetail={productViewDetail}
           itemInCart={itemInCart}
-          onNextProduct={onNextProduct}
-          onPrevProduct={onPrevProduct}
+          nextProductViewDetail={nextProductViewDetail}
+          prevProductViewDetail={prevProductViewDetail}
         />
       </div>
     </div>
   );
 }
 ViewDetailPage.propTypes = {
-  productViewDetail: PropTypes.object,
+  // productViewDetail: PropTypes.object,
   onCloseViewDetail: PropTypes.func,
-  onNextProduct: PropTypes.func,
-  onPrevProduct: PropTypes.func,
+  product: PropTypes.object,
+  nameCategoryViewDetail: PropTypes.array,
 };
 export default ViewDetailPage;

@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { moneyFormatter } from "../../utils/formatMoney";
 
-function Description({ productViewDetail, newCurrency }) {
+function Description({ productViewDetail, newCurrency, nameCategory }) {
   return (
     <div className="basis-1/2 pl-2 mr-2">
       <div className="md:hidden sm:hidden border-b border-border border-solid pb-4">
@@ -22,9 +22,11 @@ function Description({ productViewDetail, newCurrency }) {
             {productViewDetail?.name}
           </h2>
         </div>
-        <span className="font-light my-2 block text-[#83889e] my-6">
-          <span>productViewDetail?.features.length</span>
-          <span> features included</span>
+        <span className="font-light my-2 block  my-6">
+          <span className="text-[#83889e]"> Category</span>
+          <span className="ml-2 text-3xl font-bold">
+            {nameCategory[0]?.name}
+          </span>
         </span>
         <p className="text-[#3c3e49] text-base pr-2 text-justify">
           {productViewDetail?.description}
@@ -49,5 +51,6 @@ function Description({ productViewDetail, newCurrency }) {
 Description.propTypes = {
   productViewDetail: PropTypes.object,
   newCurrency: PropTypes.object,
+  nameCategory: PropTypes.array,
 };
 export default Description;

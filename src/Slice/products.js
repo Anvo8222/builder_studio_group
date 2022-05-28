@@ -2,13 +2,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const productReducer = createSlice({
-  name: "product",
+  name: "products",
   initialState: {
     products: [],
     total: 0,
     productId: {},
+    indexProduct: 0,
   },
   reducers: {
+    getIndexProduct(state, action) {
+      state.indexProduct = action.payload;
+    },
     getTotalProducts(state, action) {
       state.total = action.payload;
     },
@@ -41,5 +45,6 @@ export const {
   updateProductById,
   deleteProductById,
   getTotalProducts,
+  getIndexProduct,
 } = actions;
 export default reducer;

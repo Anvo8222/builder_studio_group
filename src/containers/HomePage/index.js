@@ -15,16 +15,6 @@ function HomePage(props) {
   const dispatch = useDispatch();
   // const [products, setProducts] = useState([]);
   const products = useSelector((state) => state.products.products);
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const dataProduct = await productList;
-  //       setProducts(dataProduct);
-  //     } catch (error) {
-  //       alert.error(error);
-  //     }
-  //   })();
-  // }, []);
   useEffect(() => {
     dispatch(fetchItems());
     dispatch(fetchProducs());

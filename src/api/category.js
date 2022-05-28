@@ -13,11 +13,16 @@ import { baseUrl } from "../config/index";
 // fetch all items
 const catelogy = `${baseUrl}/studio-categories`;
 export function fetchItems(data) {
-  console.log("data", data);
   return async (dispatch) => {
     axiosClients
       // eslint-disable-next-line no-unneeded-ternary
-      .get(`${catelogy}?page=${data.page}&limit=${data.limit}`)
+      .get(
+        `${
+          data
+            ? `${catelogy}?page=${data?.page}&limit=${data?.limit}`
+            : `${catelogy}`
+        }`
+      )
       .then((response) => {
         dispatch(getItem(response.data));
         dispatch(getTotal(response.total));

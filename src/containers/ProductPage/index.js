@@ -29,6 +29,10 @@ function ProductPage(props) {
     nameItem: "",
   });
 
+  useEffect(() => {
+    dispatch(fetchItems());
+  }, [dispatch]);
+
   const isModelAddProducts = () => {
     setShowAddNewProducts(true);
   };

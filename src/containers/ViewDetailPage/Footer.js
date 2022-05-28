@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-function Footer({
-  onAddToCart,
-  productViewDetail,
-  itemInCart,
-  onNextProduct,
-  onPrevProduct,
-}) {
+function Footer({ nextProductViewDetail, prevProductViewDetail }) {
   return (
     <div
       role="button"
@@ -17,7 +11,7 @@ function Footer({
       <span
         tabIndex="0"
         role="button"
-        onClick={onPrevProduct}
+        onClick={prevProductViewDetail}
         className="h-full pt-5 w-[200px] hover:bg-[#00cb54] text-center bg-[#00d659] font-bold"
       >
         Prev
@@ -25,7 +19,7 @@ function Footer({
       <span
         tabIndex="0"
         role="button"
-        onClick={onNextProduct}
+        onClick={nextProductViewDetail}
         className="h-full pt-5 w-[200px] hover:bg-[#00cb54] text-center bg-[#00d659] font-bold"
       >
         Next
@@ -34,10 +28,7 @@ function Footer({
   );
 }
 Footer.propTypes = {
-  onAddToCart: PropTypes.func,
-  productViewDetail: PropTypes.object,
-  itemInCart: PropTypes.array,
-  onNextProduct: PropTypes.func,
-  onPrevProduct: PropTypes.func,
+  prevProductViewDetail: PropTypes.func,
+  nextProductViewDetail: PropTypes.func,
 };
 export default Footer;
