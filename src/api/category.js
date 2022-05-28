@@ -13,7 +13,6 @@ import { baseUrl } from "../config/index";
 // fetch all items
 const catelogy = `${baseUrl}/studio-categories`;
 export function fetchItems(data) {
-  console.log("data", data);
   return async (dispatch) => {
     axiosClients
       // eslint-disable-next-line no-unneeded-ternary
@@ -31,7 +30,6 @@ export function fetchItems(data) {
 }
 
 export function postItem(data) {
-  console.log("data", data);
   return async (dispatch) => {
     axiosClients
       .post(catelogy, data)
