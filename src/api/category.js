@@ -36,7 +36,6 @@ export function fetchItems(data) {
 }
 
 export function postItem(data) {
-  console.log("data", data);
   return async (dispatch) => {
     axiosClients
       .post(catelogy, data)

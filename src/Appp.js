@@ -11,9 +11,8 @@ function Appp(props) {
     setAddData(data);
   };
   return (
-    <div className="text-center">
-      test
-      <div className="w-[700px]">
+    <div className="">
+      <div className="w-[50%]">
         <CKEditor
           editor={ClassicEditor}
           data={addData}

@@ -1,12 +1,11 @@
-import React from "react";
+import { Markup } from "interweave";
 import PropTypes from "prop-types";
-import { AiOutlineDesktop } from "react-icons/ai";
-import { BsPhone } from "react-icons/bs";
-import { MdPhoneAndroid } from "react-icons/md";
-import { baseImg } from "../../config";
+import React from "react";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
+import { baseImg } from "../../config";
 import { moneyFormatter } from "../../utils/formatMoney";
+import formatDescription from "../../utils/fortmatDescription";
 
 function Description({ productViewDetail, newCurrency, nameCategory }) {
   return (
@@ -29,7 +28,7 @@ function Description({ productViewDetail, newCurrency, nameCategory }) {
           </span>
         </span>
         <p className="text-[#3c3e49] text-base pr-2 text-justify">
-          {productViewDetail?.description}
+          <Markup content={formatDescription(productViewDetail?.description)} />
         </p>
       </div>
       <div className="border-b border-border border-solid mt-4 pb-4">

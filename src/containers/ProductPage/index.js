@@ -14,6 +14,7 @@ import {
 import { baseImg } from "../../config";
 import CreateProduct from "./CreateProduct";
 import AreYouSure from "../../components/Dialogs/AreYouSure";
+import { formatDate } from "../../utils/formatDate";
 
 function ProductPage(props) {
   const dispatch = useDispatch();
@@ -28,7 +29,6 @@ function ProductPage(props) {
     isLoading: false,
     nameItem: "",
   });
-
   useEffect(() => {
     dispatch(fetchItems());
   }, [dispatch]);
@@ -77,18 +77,30 @@ function ProductPage(props) {
 
   useEffect(() => {
     dispatch(fetchItems());
-    dispatch(fetchProducs());
+    dispatch(fetchProducs({ page: 1, limit: 6 }));
   }, []);
   useEffect(() => {
-    setPageCount(Math.ceil(total / 8));
+    setPageCount(Math.ceil(total / 6));
   }, [products]);
   const handlePageClick = (event) => {
-    dispatch(fetchProducs(event.selected));
+    dispatch(fetchProducs({ page: event.selected + 1, limit: 6 }));
   };
 
   useEffect(() => {
     dispatch(fetchProductId(currentId));
   }, [currentId]);
+
+  useEffect(() => {
+    if (isShowAddNewProducts) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isShowAddNewProducts]);
+
   return (
     <>
       <div className="sm:mt-[100px] sm:mb-[100px] mt-[58px] w-full bg-[#111827]">
@@ -129,7 +141,7 @@ function ProductPage(props) {
                     />
                   </td>
                   <td className="px-6 py-4 text-sm text-white">
-                    {item.createdAt}
+                    {formatDate(item.createdAt)}
                   </td>
                   <td
                     onClick={() => handleEditProduct(item)}

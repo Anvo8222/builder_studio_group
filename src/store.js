@@ -4,6 +4,7 @@ import currencyValues from "./Slice/changeCurrency";
 import cartSlice from "./Slice/cart";
 import itemSlice from "./Slice/category";
 import productReducer from "./Slice/products";
+import loadingSlice from "./Slice/loading";
 
 const store = configureStore({
   reducer: {
@@ -12,7 +13,7 @@ const store = configureStore({
     cart: cartSlice,
     category: itemSlice,
     products: productReducer,
+    loading: loadingSlice,
   },
-  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 export default store;

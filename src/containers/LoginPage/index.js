@@ -34,17 +34,11 @@ function LoginPage() {
   const token = localStorage.getItem("TOKEN") ?? null;
   const [isPasswordShown, setIsPasswordShown] = useState(false);
 
-  useEffect(() => {
-    if (token !== null) {
-      navigate(HOME_PAGE_ADMIN);
-    }
-  }, [token]);
-
   const handleLogin = (admin) => {
     const loginAdmin = async () => {
       try {
         await login.loginAdmin(admin);
-        navigate(LOGIN_PAGE_ADMIN);
+        navigate(HOME_PAGE_ADMIN);
       } catch (error) {
         toast.error("Login Error !", {
           position: toast.POSITION.TOP_RIGHT,
@@ -66,7 +60,7 @@ function LoginPage() {
     <div className="flex justify-center pt-50">
       <div className="w-full max-w-xs">
         <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-32 pt-20"
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-32 pt-20 h-[340px]"
           onSubmit={handleSubmit(handleLogin)}
         >
           <div className="mb-4">

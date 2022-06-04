@@ -1,5 +1,6 @@
 import { ToastContainer, toast } from "react-toastify";
 import { baseUrl } from "../config/index";
+import { isLoading } from "../Slice/loading";
 import {
   addProducts,
   getProducts,
@@ -28,7 +29,6 @@ export function uploadImageProducts(image) {
     axiosClients
       .post(uploadProducrs, image)
       .then((response) => {
-        // console.log("response", response);
       })
       .catch((er) => {});
   };
@@ -44,15 +44,24 @@ export function createProduct(value) {
           position: toast.POSITION.TOP_RIGHT,
         });
       })
-      .catch((er) => {});
+      .catch((er) => {
+        toast.error("Created Error !", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      });
   };
 }
 
-export function fetchProducs(page) {
+export function fetchProducs(data) {
   return async (dispatch) => {
     axiosClients
-      .get(`${products}?page=${page ? page + 1 : 1}`)
+      .get(
+        `${products}?page=${data.page ? data.page : 1}&limit=${
+          data.limit ? data.limit : 6
+        }`
+      )
       .then((response) => {
+        dispatch(isLoading(false));
         dispatch(getProducts(response.data));
         dispatch(getTotalProducts(response.total));
       })
@@ -76,7 +85,6 @@ export function fetchProductId(id) {
 }
 
 export function updateProductId(value) {
-  console.log("value", value);
   return async (dispatch) => {
     axiosClients
       // eslint-disable-next-line no-underscore-dangle

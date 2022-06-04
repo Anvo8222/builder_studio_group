@@ -88,7 +88,6 @@ function ViewDetailPage({
   );
 }
 ViewDetailPage.propTypes = {
-  // productViewDetail: PropTypes.object,
   onCloseViewDetail: PropTypes.func,
   product: PropTypes.object,
   nameCategoryViewDetail: PropTypes.array,

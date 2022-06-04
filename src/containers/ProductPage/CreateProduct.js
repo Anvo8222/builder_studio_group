@@ -1,35 +1,46 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable object-shorthand */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable operator-linebreak */
 /* eslint-disable indent */
 /* eslint-disable react/jsx-indent */
 /* eslint-disable no-unused-expressions */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
-import React, { useEffect, useState } from "react";
-import { AiOutlineFolderAdd, AiOutlineCloseCircle } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
-import { useForm, Controller } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { convertToRaw, EditorState } from "draft-js";
+import { stateFromHTML } from "draft-js-import-html";
+import draftToHtml from "draftjs-to-html";
 import PropTypes from "prop-types";
-import { boderInput } from "../../styles/border";
+import React, { useEffect, useState } from "react";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import * as yup from "yup";
 import {
   createProduct,
+  updateProductId,
   uploadImageLogo,
   uploadImageProducts,
-  updateProductId,
 } from "../../api/productsAuth";
+import formatDescription from "../../utils/fortmatDescription";
 import { SUPPORTED_FORMATS } from "../../utils/supportFormats";
-import { baseImg } from "../../config";
+import Content from "./Content";
 
 function CreateProduct({ oncloseProducts, categories, currentId }) {
   const dispatch = useDispatch();
   const [pictureLogo, setPictureLogo] = useState(null);
   const [pictureProducts, setPictureProducts] = useState([]);
-  const [formatterValue, setFormatterValue] = useState("");
   const [previewLogo, setPreviewLogo] = useState();
   const [previewSlide, setPreviewSlide] = useState([]);
   const currentProductId = useSelector((state) => state.products.productId);
 
+  const [editDescription, setEditDescription] = useState(
+    currentProductId ? currentProductId.description : undefined
+  );
+  const [editorState, setEditorState] = useState(
+    () => EditorState.createEmpty()
+    //
+  );
   const defaultValues = {
     name: currentProductId ? currentProductId?.name : "",
     price: currentProductId ? currentProductId?.price : "",
@@ -39,6 +50,25 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
     imgProduct: currentProductId ? currentProductId?.imgProduct : "",
   };
 
+  useEffect(() => {
+    const isDescription = defaultValues.description;
+    if (currentProductId) {
+      setEditorState(
+        EditorState.createWithContent(
+          stateFromHTML(isDescription ? formatDescription(isDescription) : "")
+        )
+      );
+      setEditDescription(currentProductId.description);
+    }
+  }, [currentProductId]);
+
+  // eslint-disable-next-line no-shadow
+  const onEditorStateChange = (editorState) => {
+    setEditorState(editorState);
+    setEditDescription(
+      draftToHtml(convertToRaw(editorState.getCurrentContent()))
+    );
+  };
   const createSchema = yup.object().shape({
     name: yup.string().required("Please enter name !"),
     price: yup
@@ -46,7 +76,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
       .required("Please enter price !")
       .min(1, "Price must be more than 1 $ !"),
     categoryId: yup.string().required("Please choice your category !"),
-    description: yup.string().required("Please enter description !"),
+    // description: yup.string().required("Please enter description !"),
     imgUrl: yup
       .mixed()
       .test("required", "Image not be empty", (value) => value && value.length)
@@ -71,7 +101,6 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
       .required("Please enter price !")
       .min(1, "Price must be more than 1 $ !"),
     categoryId: yup.string().required("Please choice your category !"),
-    description: yup.string().required("Please enter description !"),
     imgUrl: yup
       .mixed()
       .test("type", "Unsupported", (value) => {
@@ -146,12 +175,6 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
     dispatch(uploadImageProducts(formData));
   };
 
-  const handleChangeCurrency = (e) => {
-    const num = e.target.value.toString();
-    const format = num.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    setFormatterValue(format);
-  };
-
   const handleCreateProducts = (value) => {
     if (currentId) {
       const newValue = {
@@ -163,7 +186,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
             ? pictureProducts
             : currentProductId.imgProduct,
         categoryId: value.categoryId,
-        description: value.description,
+        description: editDescription,
         price: value.price,
       };
       dispatch(updateProductId(newValue));
@@ -174,7 +197,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
         imgLogo: pictureLogo,
         imgProduct: pictureProducts,
         categoryId: value.categoryId,
-        description: value.description,
+        description: editDescription,
         price: Number(newPrice),
       };
       dispatch(createProduct(newValue));
@@ -186,166 +209,29 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
   useEffect(() => {
     reset(defaultValues);
   }, [currentProductId]);
+
   return (
-    <div className="absolute top-[10%] left-[30%] w-[50%]">
-      <form
-        className="pt-30 bg-[#ace7e9e6] "
-        onSubmit={handleSubmit(handleCreateProducts)}
-      >
-        <AiOutlineCloseCircle
-          onClick={() => handleCloseProducts()}
-          tabIndex="0"
-          role="button"
-          className="absolute right-[10px] text-xl top-[10px] text-red-700 cursor-pointer hover:text-red-300 "
+    <>
+      <div className="fixed top-0 bottom-0 z-20 right-0 left-0 bg-black opacity-[0.5]"></div>
+      <div className="fixed top-[50%] z-20 rounded -translate-y-2/4 -translate-x-2/4 left-[50%] w-[80%] ">
+        {/* <h3>Create Products</h3> */}
+        <Content
+          handleCreateProducts={handleCreateProducts}
+          handleSubmit={handleSubmit}
+          handleCloseProducts={handleCloseProducts}
+          register={register}
+          errors={errors}
+          currentProductId={currentProductId}
+          editorState={editorState}
+          categories={categories}
+          onChangeImageLogo={onChangeImageLogo}
+          previewLogo={previewLogo}
+          onChangeImgProducts={onChangeImgProducts}
+          previewSlide={previewSlide}
+          onEditorStateChange={onEditorStateChange}
         />
-        <div className={`mb-4 w-2/4 m-auto block rounded mb-2 ${boderInput}`}>
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            * Name
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter name..."
-            {...register("name")}
-          />
-          {errors.name && <p className="text-red-600">{errors.name.message}</p>}
-        </div>
-        <div className={`mb-4 w-2/4 m-auto block rounded mb-2 ${boderInput}`}>
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            * Price
-          </label>
-          <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="$1"
-            type="text"
-            value={formatterValue}
-            defaultValue={currentProductId.price}
-            {...register("price", {
-              onChange: (e) => handleChangeCurrency(e),
-              onBlur: (e) => handleChangeCurrency(e),
-            })}
-          />
-          {errors.price && (
-            <p className="text-red-600">{errors.price.message}</p>
-          )}
-        </div>
-        <div className={`mb-4 w-2/4 m-auto block rounded mb-2 ${boderInput}`}>
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            * description
-          </label>
-          <textarea
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="name"
-            type="text"
-            placeholder="Enter description..."
-            {...register("description")}
-          />
-          {errors.description && (
-            <p className="text-red-600">{errors.description.message}</p>
-          )}
-        </div>
-        <div className={`mb-4 w-2/4 m-auto block rounded mb-2 ${boderInput}`}>
-          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-            * Category
-          </label>
-          <div className="relative">
-            <select
-              className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              {...register("categoryId")}
-            >
-              <option value="">--Vui lòng chọn--</option>
-              {categories?.map((item) => (
-                <option value={item._id}>{item.name}</option>
-              ))}
-            </select>
-            {errors.categoryId && (
-              <p className="text-red-600">{errors.categoryId.message}</p>
-            )}
-          </div>
-        </div>
-        <div className={`mb-4 w-2/4 m-auto block rounded mb-2 ${boderInput}`}>
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            * Logo
-          </label>
-          <input
-            id="profilePic"
-            type="file"
-            accept="image/png, image/gif, image/jpeg, image/jpg"
-            name="imgUrl"
-            {...register("imgUrl", {
-              onChange: (e) => onChangeImageLogo(e),
-              onBlur: (e) => onChangeImageLogo(e),
-            })}
-          />
-          {previewLogo && previewLogo !== undefined ? (
-            <img
-              src={previewLogo.preview}
-              alt=""
-              width="90px"
-              className="mt-2"
-            />
-          ) : (
-            <img
-              src={
-                Object.keys(currentProductId).length > 0
-                  ? `${baseImg}/${currentProductId.imgLogo}`
-                  : ""
-              }
-              alt=""
-              width="90px"
-              className="mt-2"
-            />
-          )}
-          {errors.imgUrl && (
-            <p className="text-red-600">{errors.imgUrl.message}</p>
-          )}
-        </div>
-        <div className={`mb-4 w-2/4 m-auto block rounded mb-2 ${boderInput}`}>
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            * Slide Image
-          </label>
-          <input
-            type="file"
-            id="files-upload"
-            name="imgStudioUrl"
-            accept="image/png, image/gif, image/jpeg, image/jpg"
-            multiple="multiple"
-            {...register("imgStudioUrl", {
-              onChange: (e) => onChangeImgProducts(e),
-              onBlur: (e) => onChangeImgProducts(e),
-            })}
-          />
-          <div className="flex w-full overflow-auto">
-            {previewSlide.length > 0
-              ? previewSlide.map((item) => (
-                  <img src={item.preview} alt="" className="mt-3 mr-2 w-1/3" />
-                ))
-              : Array.isArray(currentProductId?.imgProduct) &&
-                currentProductId?.imgProduct.length > 0 &&
-                currentProductId?.imgProduct.map((item) => (
-                  <img
-                    src={
-                      Object.keys(currentProductId).length > 0
-                        ? `${baseImg}/${item}`
-                        : ""
-                    }
-                    alt=""
-                    className="mt-3 mr-2 w-1/3"
-                  />
-                ))}
-          </div>
-          {errors.imgStudioUrl && (
-            <p className="text-red-600">{errors.imgStudioUrl.message}</p>
-          )}
-        </div>
-        <div className="flex items-center justify-between pl-[40%]">
-          <input
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
-            type="submit"
-            value="submit"
-          />
-        </div>
-      </form>
-    </div>
+      </div>
+    </>
   );
 }
 CreateProduct.propTypes = {
