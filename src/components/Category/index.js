@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import FilterByCategory from "./FilterByCategory";
-import FilterByCost from "./FilterByCost";
 import catelogyList from "../../data/categorys";
 import costList from "../../data/costs";
 
 function Category(props) {
   const [categorys, setCategorys] = useState([]);
-  const [costs, setCosts] = useState([]);
   const isMenuShowFilter = useSelector((state) => state.showMenuFilterSlice);
 
   useEffect(() => {
@@ -17,7 +15,6 @@ function Category(props) {
         const dataCatelogy = await catelogyList;
         const dataCost = await costList;
         setCategorys(dataCatelogy);
-        setCosts(dataCost);
       } catch (error) {
         alert.error(error);
       }
@@ -34,12 +31,10 @@ function Category(props) {
         <div className="scroll max-h-[90vh] max-w-[262px] lg:bg-white md:bg-white sm:bg-white">
           <div className="lg:hidden md:hidden sm:hidden">
             <FilterByCategory categorys={categorys} />
-            <FilterByCost costs={costs} />
           </div>
           {isMenuShowFilter ? (
             <div className="lg:block md:block sm:block xl:hidden 2xl:hidden max-h-[70vh] pb-4">
               <FilterByCategory categorys={categorys} />
-              <FilterByCost costs={costs} />
             </div>
           ) : (
             false
