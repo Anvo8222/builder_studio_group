@@ -62,7 +62,7 @@ function Products({ products }) {
           <Loading />
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-8 md:grid-cols-2 md:gap-4 sm:grid-cols-1 sm:gap-2">
+        <div className="pb-[10px] grid grid-cols-3 gap-8 md:grid-cols-2 md:gap-4 sm:grid-cols-1 sm:gap-2">
           {products?.map((product, index) => (
             <div className="relative" key={product._id}>
               <div
