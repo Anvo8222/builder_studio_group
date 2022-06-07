@@ -28,7 +28,7 @@ function Category(props) {
         false
       )}
       <div className="bg-white  sm:mt-6 overflow-hidden rounded-md lg:fixed lg:right-[0] lg:top-[27%] md:fixed md:right-[0] md:top-[27%] sm:fixed sm:right-[0] sm:top-[27%] fixed z-40 max-h-[90vh] max-w-[262px] min-w-[262px] border-r-2 border-solid border-inherit">
-        <div className="scroll max-h-[90vh] max-w-[262px] lg:bg-white md:bg-white sm:bg-white">
+        <div className="scroll h-[100vh] max-w-[262px] lg:bg-white md:bg-white sm:bg-white">
           <div className="lg:hidden md:hidden sm:hidden">
             <FilterByCategory categorys={categorys} />
           </div>
