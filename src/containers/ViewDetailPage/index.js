@@ -60,7 +60,7 @@ function ViewDetailPage({
   return (
     <div className="fixed justify-center items-center flex inset-0 z-50">
       <div className="fixed bg-[#ccc] inset-0 opacity-40"></div>
-      <div className="fixed bg-white w-[90%] max-w-[90%] viewDetail rounded ">
+      <div className="fixed bg-white w-[90%] max-w-[90%] 2xl:w-[70%] viewDetail rounded ">
         <div className="relative max-h-[550px] scroll">
           <Header onCloseViewDetail={onCloseViewDetail} />
           <div className="w-full md:block sm:block flex h-full mt-4">

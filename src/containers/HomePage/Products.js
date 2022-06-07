@@ -43,17 +43,17 @@ function Products({ products }) {
   };
 
   // eslint-disable-next-line consistent-return
-  const onAddToCart = (product) => {
-    if (
-      // eslint-disable-next-line operator-linebreak
-      itemInCart.length >= 3 &&
-      itemInCart.some((x) => x.id === product.id) !== true
-    ) {
-      setIsShowDialog(true);
-    } else if (isShowDialog === false) {
-      dispatch(addToCart(product));
-    }
-  };
+  // const onAddToCart = (product) => {
+  //   if (
+  //     // eslint-disable-next-line operator-linebreak
+  //     itemInCart.length >= 3 &&
+  //     itemInCart.some((x) => x.id === product.id) !== true
+  //   ) {
+  //     setIsShowDialog(true);
+  //   } else if (isShowDialog === false) {
+  //     dispatch(addToCart(product));
+  //   }
+  // };
 
   return (
     <>
@@ -62,7 +62,7 @@ function Products({ products }) {
           <Loading />
         </div>
       ) : (
-        <div className="grid grid-cols-3 gap-8 md:grid-cols-2 md:gap-4 sm:grid-cols-1 sm:gap-2">
+        <div className="pb-[10px] grid grid-cols-3 gap-8 md:grid-cols-2 md:gap-4 sm:grid-cols-1 sm:gap-2">
           {products?.map((product, index) => (
             <div className="relative" key={product._id}>
               <div

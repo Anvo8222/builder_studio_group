@@ -53,10 +53,11 @@ function HomePage(props) {
         <Category />
         <SubHeader />
         <div className="ml-[262px] lg:ml-[0] md:ml-[0] sm:ml-[0] sm:mt-[160px] mt-[120px] px-[26px] w-full">
-          <TypeProductOptions />
+          {/* <TypeProductOptions /> */}
           <h2 className="text-[#3c3e49] my-[30px] text-lg">
-            Choose up to 3 templates (apps similar to your idea) to use as a
-            base.
+            These are our products and services.Our products and services will
+            bring satisfaction to our customers.Thank you for your interest in
+            the company is products and services.
           </h2>
           <Products products={products} />
         </div>

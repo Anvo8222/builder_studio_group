@@ -4,19 +4,15 @@ import { AiOutlineCheck } from "react-icons/ai";
 import { useSelector } from "react-redux";
 
 function FilterByCategory() {
-  const [categorys, setCategorys] = useState();
-  const cate = useSelector((state) => state.category);
+  const categories = useSelector((state) => state.category.items);
 
-  useEffect(() => {
-    setCategorys(cate.items);
-  }, [cate]);
   return (
     <>
       <div className="pl-[30px] flex items-end min-h-[120px] border-b border-solid border-inherit">
         <h2 className="font-semibold text-xs">Filter by category</h2>
       </div>
       <ul>
-        {categorys?.map((category) => (
+        {categories?.map((category) => (
           <li
             key={category.id}
             className="cursor-pointer hover:bg-[#f8f9fa] border-b border-solid border-inherit"
