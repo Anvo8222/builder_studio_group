@@ -6,13 +6,13 @@
 /* eslint-disable react/jsx-indent */
 /* eslint-disable no-unused-expressions */
 /* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import { convertToRaw, EditorState } from "draft-js";
 import { stateFromHTML } from "draft-js-import-html";
 import draftToHtml from "draftjs-to-html";
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -51,6 +51,7 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
 
   useEffect(() => {
     const isDescription = defaultValues.description;
+
     if (currentProductId) {
       setEditorState(
         EditorState.createWithContent(
@@ -60,7 +61,6 @@ function CreateProduct({ oncloseProducts, categories, currentId }) {
       setEditDescription(currentProductId.description);
     }
   }, [currentProductId]);
-
   // eslint-disable-next-line no-shadow
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
