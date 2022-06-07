@@ -14,16 +14,6 @@ function Right(props) {
   };
   return (
     <ul className="flex items-center sm:flex flex-wrap z-50 sm:justify-end sm:h-[140px]">
-      <li className=" rounded p-2 border border-solid border-inherit mr-4 cursor-pointer hover:bg-[#f8f9fa]">
-        <AiOutlineSearch className="text-xl text-[#3c3e49]" />
-      </li>
-      <li className=" rounded p-2 border border-solid border-inherit flex items-center mr-4 cursor-pointer hover:bg-[#f8f9fa]">
-        <GrAdd className="text-xl text-[#9f9fa6]" />
-        <span className="text-sm text-[#3c3e49] ml-2">Custom Template</span>
-      </li>
-      <li className=" rounded p-2 border border-solid border-inherit mr-4 cursor-pointer hover:bg-[#f8f9fa]">
-        <BiSortAlt2 className="text-xl text-[#3c3e49]" />
-      </li>
       <li
         role="presentation"
         className={`${
