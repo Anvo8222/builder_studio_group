@@ -1,9 +1,13 @@
+/* eslint-disable import/no-relative-packages */
+/* eslint-disable import/no-duplicates */
+/* eslint-disable prefer-const */
 /* eslint-disable operator-linebreak */
 import PropTypes from "prop-types";
-import React from "react";
+import React, { Fragment, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+// import uploadImageCallBack from "../../utils/uploadImageCallBack";
 import { baseImg } from "../../config";
 import { boderInput } from "../../styles/border";
 
@@ -22,6 +26,23 @@ function Content({
   onChangeImgProducts,
   previewSlide,
 }) {
+  const [uploadImage, setUploadImage] = useState([]);
+  const uploadImageCallBack = (file) => {
+    const uploadedImages = uploadImage;
+
+    const imageObject = {
+      // eslint-disable-next-line object-shorthand
+      file: file,
+      localSrc: URL.createObjectURL(file),
+    };
+
+    uploadedImages.push(imageObject);
+
+    setUploadImage(uploadedImages);
+    return new Promise((resolve, reject) => {
+      resolve({ data: { link: imageObject.localSrc } });
+    });
+  };
   return (
     <form
       className="pt-12 bg-[#11111d] scroll h-[550px]"
@@ -59,11 +80,26 @@ function Content({
         <label className="block text-white text-sm font-bold mb-2">
           * description
         </label>
+
         <Editor
           editorState={editorState}
           wrapperClassName="demo-wrapper bg-white"
           editorClassName="demo-editor"
+          toolbarClassName="toolbarClassName"
           onEditorStateChange={onEditorStateChange}
+          toolbar={{
+            inline: { inDropdown: true },
+            list: { inDropdown: true },
+            textAlign: { inDropdown: true },
+            link: { inDropdown: true },
+            history: { inDropdown: true },
+            image: {
+              uploadCallback: uploadImageCallBack,
+              alt: { present: true, mandatory: true },
+            },
+            inputAccept:
+              "application/pdf,text/plain,application/vnd.openxmlformatsofficedocument.wordprocessingml.document,application/msword,application/vnd.ms-excel",
+          }}
         />
       </div>
 

@@ -1,26 +1,28 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-underscore-dangle */
-import React, { useState, useEffect } from "react";
-import { AiOutlineFolderAdd, AiFillDelete } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
+import { AiFillDelete, AiOutlineFolderAdd } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
-import { useDispatch, useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchItems } from "../../api/category";
 import {
+  deleteProductId,
   fetchProducs,
   fetchProductId,
-  deleteProductId,
 } from "../../api/productsAuth";
-import { baseImg } from "../../config";
-import CreateProduct from "./CreateProduct";
 import AreYouSure from "../../components/Dialogs/AreYouSure";
+import { baseImg } from "../../config";
 import { formatDate } from "../../utils/formatDate";
+import ViewDetailPage from "../ViewDetailPage";
+import CreateProduct from "./CreateProduct";
 
 function ProductPage(props) {
   const dispatch = useDispatch();
   const [currentId, setCurrentId] = useState(null);
   const [isShowAddNewProducts, setShowAddNewProducts] = useState(false);
   const [pageCount, setPageCount] = useState(0);
+  const [isShowViewProduct, setIsShowViewProduct] = useState(false);
   const products = useSelector((state) => state.products.products);
   const total = useSelector((state) => state.products.total);
   const category = useSelector((state) => state.category.items);
@@ -75,6 +77,9 @@ function ProductPage(props) {
     setCurrentId(null);
   };
 
+  // product={productViewDetail}
+  // nameCategoryViewDetail={nameCategoryViewDetail}
+  // onCloseViewDetail={onCloseViewDetail}
   useEffect(() => {
     dispatch(fetchItems());
     dispatch(fetchProducs({ page: 1, limit: 6 }));
@@ -100,7 +105,6 @@ function ProductPage(props) {
       document.body.style.overflow = "unset";
     };
   }, [isShowAddNewProducts]);
-
   return (
     <>
       <div className="sm:mt-[100px] sm:mb-[100px] mt-[58px] w-full bg-[#111827]">
@@ -122,6 +126,7 @@ function ProductPage(props) {
                 <th className="px-6 py-2 text-xs text-white">Name</th>
                 <th className="px-6 py-2 text-xs text-white">Image</th>
                 <th className="px-6 py-2 text-xs text-white">Created_at</th>
+                {/* <th className="px-6 py-2 text-xs text-white">Preview</th> */}
                 <th className="px-6 py-2 text-xs text-white">Edit</th>
                 <th className="px-6 py-2 text-xs text-white">Delete</th>
               </tr>
@@ -143,6 +148,14 @@ function ProductPage(props) {
                   <td className="px-6 py-4 text-sm text-white">
                     {formatDate(item.createdAt)}
                   </td>
+                  {/* <td
+                    className="px-6 py-4"
+                    onClick={() => onViewProduct(item)}
+                    role="button"
+                    tabIndex="0"
+                  >
+                    <AiOutlineEye className="w-6 h-6 text-[#237cde] m-auto" />
+                  </td> */}
                   <td
                     onClick={() => handleEditProduct(item)}
                     role="button"
@@ -195,6 +208,7 @@ function ProductPage(props) {
           onCloseDialog={onCloseDialog}
         />
       )}
+      {isShowViewProduct ? <ViewDetailPage /> : false}
     </>
   );
 }

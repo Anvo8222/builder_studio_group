@@ -1,3 +1,6 @@
+/* eslint-disable react/no-danger */
+/* eslint-disable react/jsx-closing-tag-location */
+/* eslint-disable jsx-a11y/iframe-has-title */
 import { Markup } from "interweave";
 import PropTypes from "prop-types";
 import React from "react";
@@ -22,13 +25,16 @@ function Description({ productViewDetail, newCurrency, nameCategory }) {
           </h2>
         </div>
         <span className="font-light my-2 block  my-6">
-          <span className="text-[#83889e]"> Category</span>
-          <span className="ml-2 text-3xl font-bold">
-            {nameCategory[0]?.name}
-          </span>
+          <span className="text-[#83889e] text-xl"> Category</span>
+          <span className="ml-2 text-xl">{nameCategory[0]?.name}</span>
         </span>
         <p className="text-[#3c3e49] text-base pr-2 text-justify">
-          <Markup content={formatDescription(productViewDetail?.description)} />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: formatDescription(productViewDetail?.description),
+            }}
+          ></div>
+          {/* <Markup content={formatDescription(productViewDetail?.description)} /> */}
         </p>
       </div>
       <div className="border-b border-border border-solid mt-4 pb-4">
