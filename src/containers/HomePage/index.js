@@ -1,18 +1,19 @@
 /* eslint-disable no-bitwise */
 /* eslint-disable operator-linebreak */
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import TypeProductOptions from "./TypeProductOptions";
-import Products from "./Products";
-import productList from "../../data/products";
-import Header from "../../components/Header";
-import { fetchItems } from "../../api/category";
-import Category from "../../components/Category";
-import SubHeader from "../../components/SubHeader";
-import Cart from "../../components/Cart";
-import { fetchProducs } from "../../api/productsAuth";
-import { isLoading } from "../../Slice/loading";
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import TypeProductOptions from './TypeProductOptions';
+import Products from './Products';
+import productList from '../../data/products';
+import Header from '../../components/Header';
+import { fetchItems } from '../../api/category';
+import Category from '../../components/Category';
+import SubHeader from '../../components/SubHeader';
+import Cart from '../../components/Cart';
+import { fetchProducs } from '../../api/productsAuth';
+import { isLoading } from '../../Slice/loading';
+import { handleChangeFilterProduct } from '../../utils/handleFilterProduct';
 
 function HomePage(props) {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ function HomePage(props) {
     page: 1,
     limit: 6,
   });
+  const [filterCategory, setFilterCategory] = useState([]);
+  const totalCategory = useSelector((state) => state.category.total);
   // eslint-disable-next-line consistent-return
   const handleScrollPage = (e) => {
     if (total !== 0 && countProducts.limit > total) {
@@ -40,17 +43,28 @@ function HomePage(props) {
       });
     }
   };
+
+  const handleChangeProduct = (id, isCheck) => {
+    const newProduct = handleChangeFilterProduct(id, isCheck);
+    console.log(newProduct);
+  };
+
   useEffect(() => {
     dispatch(fetchItems());
     dispatch(fetchProducs(countProducts));
-    window.addEventListener("scroll", () => handleScrollPage());
+    window.addEventListener('scroll', () => handleScrollPage());
   }, [countProducts]);
 
+  useEffect(() => {
+    dispatch(
+      fetchItems({ page: 1, limit: totalCategory !== 0 ? totalCategory : 6 })
+    );
+  }, [totalCategory]);
   return (
     <>
       <Header />
       <div className="pt-[64px] flex">
-        <Category />
+        <Category handleChangeProduct={handleChangeProduct} />
         <SubHeader />
         <div className="ml-[262px] lg:ml-[0] md:ml-[0] sm:ml-[0] sm:mt-[160px] mt-[120px] px-[26px] w-full">
           {/* <TypeProductOptions /> */}

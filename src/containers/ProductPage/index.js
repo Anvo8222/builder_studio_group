@@ -1,21 +1,21 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect, useState } from "react";
-import { AiFillDelete, AiOutlineFolderAdd } from "react-icons/ai";
-import { BiEdit } from "react-icons/bi";
-import ReactPaginate from "react-paginate";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchItems } from "../../api/category";
+import React, { useEffect, useState } from 'react';
+import { AiFillDelete, AiOutlineFolderAdd } from 'react-icons/ai';
+import { BiEdit } from 'react-icons/bi';
+import ReactPaginate from 'react-paginate';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchItems } from '../../api/category';
 import {
   deleteProductId,
   fetchProducs,
   fetchProductId,
-} from "../../api/productsAuth";
-import AreYouSure from "../../components/Dialogs/AreYouSure";
-import { baseImg } from "../../config";
-import { formatDate } from "../../utils/formatDate";
-import ViewDetailPage from "../ViewDetailPage";
-import CreateProduct from "./CreateProduct";
+} from '../../api/productsAuth';
+import AreYouSure from '../../components/Dialogs/AreYouSure';
+import { baseImg } from '../../config';
+import { formatDate } from '../../utils/formatDate';
+import ViewDetailPage from '../ViewDetailPage';
+import CreateProduct from './CreateProduct';
 
 function ProductPage(props) {
   const dispatch = useDispatch();
@@ -26,10 +26,11 @@ function ProductPage(props) {
   const products = useSelector((state) => state.products.products);
   const total = useSelector((state) => state.products.total);
   const category = useSelector((state) => state.category.items);
+  const totalCategory = useSelector((state) => state.category.total);
   const [dialog, setDialog] = useState({
-    message: "",
+    message: '',
     isLoading: false,
-    nameItem: "",
+    nameItem: '',
   });
   useEffect(() => {
     dispatch(fetchItems());
@@ -58,7 +59,7 @@ function ProductPage(props) {
   };
 
   function handleDeleteCategory(value) {
-    handleDialog("Are you sure you want to delete?", true, value.name);
+    handleDialog('Are you sure you want to delete?', true, value.name);
     setCurrentId(value._id);
   }
 
@@ -70,9 +71,9 @@ function ProductPage(props) {
 
   const onCloseDialog = () => {
     setDialog({
-      message: "",
+      message: '',
       isLoading: false,
-      nameProduct: "",
+      nameProduct: '',
     });
     setCurrentId(null);
   };
@@ -84,6 +85,11 @@ function ProductPage(props) {
     dispatch(fetchItems());
     dispatch(fetchProducs({ page: 1, limit: 6 }));
   }, []);
+
+  useEffect(() => {
+    dispatch(fetchItems({ page: 1, limit: totalCategory }));
+  }, [totalCategory]);
+
   useEffect(() => {
     setPageCount(Math.ceil(total / 6));
   }, [products]);
@@ -97,12 +103,12 @@ function ProductPage(props) {
 
   useEffect(() => {
     if (isShowAddNewProducts) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = 'unset';
     }
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = 'unset';
     };
   }, [isShowAddNewProducts]);
   return (
