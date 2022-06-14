@@ -42,19 +42,6 @@ function Products({ products }) {
     setIsShowDialog(false);
   };
 
-  // eslint-disable-next-line consistent-return
-  // const onAddToCart = (product) => {
-  //   if (
-  //     // eslint-disable-next-line operator-linebreak
-  //     itemInCart.length >= 3 &&
-  //     itemInCart.some((x) => x.id === product.id) !== true
-  //   ) {
-  //     setIsShowDialog(true);
-  //   } else if (isShowDialog === false) {
-  //     dispatch(addToCart(product));
-  //   }
-  // };
-
   return (
     <>
       {isLoading ? (
@@ -68,7 +55,7 @@ function Products({ products }) {
               <div
                 role="button"
                 tabIndex="0"
-                // onClick={() => onAddToCart(product)}
+                onClick={() => onShowViewDetail(product, index)}
                 className="h-[440px] sm:h-[500px] rounded p-6 sm:p-0 border-border border-solid border cursor-pointer hover:border-[#cccc] hover:shadow-[0_1px_40px_-20px_rgba(0,0,0,0.4)] transition hover:delay-10 ease-in-out"
               >
                 <div className="flex justify-between items-center">

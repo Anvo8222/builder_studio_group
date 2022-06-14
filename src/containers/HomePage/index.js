@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-bitwise */
 /* eslint-disable operator-linebreak */
 import React, { useEffect, useState } from "react";
@@ -23,36 +24,43 @@ function HomePage(props) {
     page: 1,
     limit: 6,
   });
-  // eslint-disable-next-line consistent-return
-  const handleScrollPage = (e) => {
-    if (total !== 0 && countProducts.limit > total) {
-      dispatch(isLoading(false));
-      return false;
-    }
-    if (
-      window.innerHeight + document.documentElement.scrollTop >=
-      document.documentElement.scrollHeight
-    ) {
-      dispatch(isLoading(true));
-      setCountProducts({
-        page: 1,
-        limit: countProducts.limit + 6,
-      });
-    }
-  };
+  const categoryIdList = useSelector((state) => state.filterByCategory.items);
+
   useEffect(() => {
     dispatch(fetchItems());
     dispatch(fetchProducs(countProducts));
-    window.addEventListener("scroll", () => handleScrollPage());
   }, [countProducts]);
-
+  // eslint-disable-next-line consistent-return
+  const handleScrollPage = (e) => {
+    if (categoryIdList.length > 0) return false;
+    if (categoryIdList.length <= 0) {
+      if (total !== 0 && countProducts.limit >= total) {
+        dispatch(isLoading(false));
+        return false;
+      }
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+          document.documentElement.scrollHeight &&
+        countProducts.limit < total
+      ) {
+        setCountProducts({
+          page: 1,
+          limit: countProducts.limit + 6,
+        });
+        dispatch(isLoading(true));
+      }
+    }
+  };
+  if (categoryIdList.length <= 0) {
+    window.addEventListener("scroll", () => handleScrollPage());
+  }
   return (
     <>
       <Header />
       <div className="pt-[64px] flex">
         <Category />
         <SubHeader />
-        <div className="ml-[262px] lg:ml-[0] md:ml-[0] sm:ml-[0] sm:mt-[160px] mt-[120px] px-[26px] w-full">
+        <div className="ml-[262px] mb-[100px] lg:ml-[0] md:ml-[0] sm:ml-[0] sm:mt-[160px] mt-[120px] px-[26px] w-full">
           {/* <TypeProductOptions /> */}
           <h2 className="text-[#3c3e49] my-[30px] text-lg">
             These are our products and services.Our products and services will
@@ -61,7 +69,6 @@ function HomePage(props) {
           </h2>
           <Products products={products} />
         </div>
-        <Cart />
       </div>
     </>
   );

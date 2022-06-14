@@ -5,6 +5,7 @@ import cartSlice from "./Slice/cart";
 import itemSlice from "./Slice/category";
 import productReducer from "./Slice/products";
 import loadingSlice from "./Slice/loading";
+import filterByCategorySlice from "./Slice/filterByCategory";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     category: itemSlice,
     products: productReducer,
     loading: loadingSlice,
+    filterByCategory: filterByCategorySlice,
   },
 });
 export default store;
