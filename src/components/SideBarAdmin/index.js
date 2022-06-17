@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import React from "react";
 import PropTypes from "prop-types";
 import { Nav, NavLink } from "react-router-dom";

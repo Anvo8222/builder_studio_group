@@ -23,42 +23,44 @@ function HomePage(props) {
   const [countProducts, setCountProducts] = useState({
     page: 1,
     limit: 6,
+    categoryId: [],
   });
-  const categoryIdList = useSelector((state) => state.filterByCategory.items);
-
   useEffect(() => {
     dispatch(fetchItems());
     dispatch(fetchProducs(countProducts));
   }, [countProducts]);
   // eslint-disable-next-line consistent-return
   const handleScrollPage = (e) => {
-    if (categoryIdList.length > 0) return false;
-    if (categoryIdList.length <= 0) {
-      if (total !== 0 && countProducts.limit >= total) {
-        dispatch(isLoading(false));
-        return false;
-      }
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-          document.documentElement.scrollHeight &&
-        countProducts.limit < total
-      ) {
-        setCountProducts({
-          page: 1,
-          limit: countProducts.limit + 6,
-        });
-        dispatch(isLoading(true));
-      }
+    if (
+      window.innerHeight + document.documentElement.scrollTop >
+      document.documentElement.scrollHeight
+    ) {
+      setCountProducts({
+        ...countProducts,
+        limit: countProducts.limit + 6,
+      });
     }
   };
-  if (categoryIdList.length <= 0) {
-    window.addEventListener("scroll", () => handleScrollPage());
-  }
+  window.addEventListener("scroll", (e) => handleScrollPage(e));
+  const onChooseFilterCategory = (id) => {
+    const index = countProducts.categoryId.findIndex((x) => x === id);
+    if (index < 0) {
+      setCountProducts({
+        ...countProducts,
+        categoryId: [...countProducts.categoryId, id],
+      });
+    } else if (index >= 0) {
+      setCountProducts({
+        ...countProducts,
+        categoryId: countProducts.categoryId.filter((x) => x !== id),
+      });
+    }
+  };
   return (
     <>
       <Header />
       <div className="pt-[64px] flex">
-        <Category />
+        <Category onChooseFilterCategory={onChooseFilterCategory} />
         <SubHeader />
         <div className="ml-[262px] mb-[100px] lg:ml-[0] md:ml-[0] sm:ml-[0] sm:mt-[160px] mt-[120px] px-[26px] w-full">
           {/* <TypeProductOptions /> */}

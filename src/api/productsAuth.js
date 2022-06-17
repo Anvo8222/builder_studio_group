@@ -1,6 +1,7 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable prefer-const */
 import { ToastContainer, toast } from "react-toastify";
+import queryString from "query-string";
 import { baseUrl } from "../config/index";
 import { isLoading } from "../Slice/loading";
 import {
@@ -54,13 +55,10 @@ export function createProduct(value) {
 }
 
 export function fetchProducs(data) {
+  const params = queryString.stringify(data, { arrayFormat: "index" });
   return async (dispatch) => {
     axiosClients
-      .get(
-        `${products}?page=${data.page ? data.page : 1}&limit=${
-          data.limit ? data.limit : 6
-        }`
-      )
+      .get(`${products}?${params}`)
       .then((response) => {
         dispatch(isLoading(false));
         dispatch(getProducts(response.data));
@@ -69,22 +67,22 @@ export function fetchProducs(data) {
       .catch((er) => {});
   };
 }
-export function fetchProductByCategory(data) {
-  let string = "";
-  for (let i = 0; i < data.length; i++) {
-    string += "&categoryId=" + data[i];
-  }
-  return async (dispatch) => {
-    axiosClients
-      .get(`${products}${data ? `?${string.slice(1, string.lenght)}` : null}`)
-      .then((response) => {
-        dispatch(isLoading(false));
-        dispatch(getProducts(response.data));
-        dispatch(getTotalProducts(response.total));
-      })
-      .catch((er) => {});
-  };
-}
+// export function fetchProductByCategory(data) {
+//   let string = "";
+//   for (let i = 0; i < data.length; i++) {
+//     string += "&categoryId=" + data[i];
+//   }
+//   return async (dispatch) => {
+//     axiosClients
+//       .get(`${products}${data ? `?${string.slice(1, string.lenght)}` : null}`)
+//       .then((response) => {
+//         dispatch(isLoading(false));
+//         dispatch(getProducts(response.data));
+//         dispatch(getTotalProducts(response.total));
+//       })
+//       .catch((er) => {});
+//   };
+// }
 export function fetchProductId(id) {
   return async (dispatch) => {
     if (id !== null) {
