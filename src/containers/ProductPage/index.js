@@ -110,7 +110,7 @@ function ProductPage(props) {
   return (
     <>
       <div className="sm:mt-[100px] sm:mb-[100px] mt-[58px] w-full bg-[#111827]">
-        <div className="basis-10/12 flex flex-col xl:max-w-[800px] 2xl:max-w-[800px] lg:max-w-[660px] m-auto container border-b border-gray-200 shadow">
+        <div className="mt-10 basis-10/12 flex flex-col xl:max-w-[800px] 2xl:max-w-[800px] lg:max-w-[660px] m-auto container border-b border-gray-200 shadow">
           <div className="flex items-center mb-4">
             <button
               onClick={() => isModelAddProducts()}
