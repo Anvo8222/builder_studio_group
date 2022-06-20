@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { AiOutlineCheck } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductByCategory } from "../../api/productsAuth";
+// import { fetchProductByCategory } from "../../api/productsAuth";
 import { addId } from "../../Slice/filterByCategory";
 
 function FilterByCategory({ onChooseFilterCategory }) {

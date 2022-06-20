@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import PropTypes from "prop-types";
@@ -57,72 +58,73 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex justify-center pt-50">
-      <div className="w-full max-w-xs">
+    <div className="login-page <lg:px-2">
+      <div className="absolute mx-auto items-center justify-center w-150 min-h-110  max-w-10/12 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[25%]">
         <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 my-32 pt-20 h-[340px]"
+          className="w-full h-full bg-white p-4 form-signIn bg-opacity-80"
           onSubmit={handleSubmit(handleLogin)}
         >
-          <div className="mb-4">
-            <label
-              className="block text-grey-darker text-sm font-bold mb-2"
-              name="username"
-            >
-              Email address!
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-grey-darker leading-tight focus:outline-none focus:shadow-outline"
-              type="email"
-              name="email"
-              placeholder="Enter your email..."
-              {...register("email")}
-            />
-            <p className="my-4 text-red-500">
-              {errors.email && errors.email.message}
-            </p>
+          <div className="font-bold text-center flex justify-center text-2xl">
+            SIGN IN
           </div>
-          <div className="mb-6">
-            <label
-              className="block text-grey-darker text-sm font-bold mb-2"
-              name="password"
-            >
-              Password
-            </label>
-            <input
-              className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-grey-darker mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              name="password"
-              type={isPasswordShown ? "hide" : "password"}
-              placeholder="Enter your password..."
-              {...register("password")}
-            />
-            <div
-              className="relative"
-              onClick={handleShowPass}
-              role="button"
-              tabIndex="0"
-            >
-              {isPasswordShown ? (
-                <FaEye className="absolute bottom-6 right-5" />
-              ) : (
-                <FaEyeSlash className="absolute bottom-6 right-5" />
-              )}
+          <div className="relative">
+            <div className="mt-4 pl-3 pb-2">
+              <div>* Email:</div>
             </div>
-            <p className="my-4 text-red-500">
+            <div className="shadow-xl w-full rounded-lg h-12 border border-blue-gray-200 relative overflow-hidden">
+              <input
+                id="email"
+                className="bg-white outline-none border-none w-full h-full pl-5"
+                type="email"
+                name="email"
+                placeholder="Enter email..."
+                {...register('email')}
+              />
+            </div>
+
+            <span className="text-red-500/100 ml-3">
+              {errors.email && errors.email.message}
+            </span>
+
+            <div className="mt-4 pl-3 pb-2">
+              <div>* Password:</div>
+            </div>
+            <div className="shadow-xl w-full rounded-lg h-12 border border-blue-gray-200 relative overflow-hidden">
+              <div
+                onClick={handleShowPass}
+                className="absolute cursor-pointer none-select right-0 h-full w-16 bg-blue-gray-200 flex items-center justify-center top-[25%]"
+              >
+                <div className="text-gray-500 text-2xl">
+                  {isPasswordShown ? (
+                    <FaEye className="absolute bottom-6 right-5" />
+                  ) : (
+                    <FaEyeSlash className="absolute bottom-6 right-5" />
+                  )}
+                </div>
+              </div>
+              <input
+                className="bg-white outline-none border-none w-full h-full pl-5"
+                name="password"
+                type={isPasswordShown ? 'hide' : 'password'}
+                placeholder="Enter password..."
+                {...register('password')}
+              />
+            </div>
+
+            <span className="text-red-500/100 ml-3">
               {errors.password && errors.password.message}
-            </p>
-          </div>
-          <div className="flex items-center justify-between">
-            <button
-              className="bg-blue absolute top-[62%] left-[47%] border-solid border-2 border-indigo-600 rounded-md px-5"
-              type="submit"
-            >
-              Sign In
-            </button>
+            </span>
+
+            <div className="text-right">
+              <button
+                className="text-white rounded-lg w-28 mt-7 h-10 overflow-hidden hover:bg-opacity-90 bg-green-600"
+                type="submit"
+              >
+                Sign In
+              </button>
+            </div>
           </div>
         </form>
-        <p className="text-center text-grey text-xs">
-          ©2018 Acme Corp. All rights reserved.
-        </p>
       </div>
     </div>
   );

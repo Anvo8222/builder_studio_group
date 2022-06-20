@@ -9,7 +9,7 @@ import { fetchItems } from "../../api/category";
 import {
   deleteProductId,
   fetchProducs,
-  fetchProductId,
+  fetchProductId
 } from "../../api/productsAuth";
 import AreYouSure from "../../components/Dialogs/AreYouSure";
 import { baseImg } from "../../config";
@@ -26,6 +26,7 @@ function ProductPage(props) {
   const products = useSelector((state) => state.products.products);
   const total = useSelector((state) => state.products.total);
   const category = useSelector((state) => state.category.items);
+  const totalCategories = useSelector((state) => state.category.total);
   const [dialog, setDialog] = useState({
     message: "",
     isLoading: false,
@@ -77,9 +78,6 @@ function ProductPage(props) {
     setCurrentId(null);
   };
 
-  // product={productViewDetail}
-  // nameCategoryViewDetail={nameCategoryViewDetail}
-  // onCloseViewDetail={onCloseViewDetail}
   useEffect(() => {
     dispatch(fetchItems());
     dispatch(fetchProducs({ page: 1, limit: 6 }));
@@ -94,6 +92,10 @@ function ProductPage(props) {
   useEffect(() => {
     dispatch(fetchProductId(currentId));
   }, [currentId]);
+
+  useEffect(() => {
+    if (totalCategories) dispatch(fetchItems({ page: 1, limit: totalCategories }));
+  }, [totalCategories]);
 
   useEffect(() => {
     if (isShowAddNewProducts) {

@@ -26,6 +26,7 @@ import { createSchema, updateSchema } from "../../utils/validateForm";
 import Content from "./Content";
 
 function CreateProduct({ oncloseProducts, categories, currentId }) {
+  console.log(categories);
   const dispatch = useDispatch();
   const [pictureLogo, setPictureLogo] = useState(null);
   const [pictureProducts, setPictureProducts] = useState([]);
